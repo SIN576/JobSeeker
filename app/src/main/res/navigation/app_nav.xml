@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.soysin.mobile.jobseeker.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/viewCVFragment"
+        android:name="com.soysin.mobile.jobseeker.viewCV.ViewCVFragment"
+        android:label="fragment_view_c_v"
+        tools:layout="@layout/fragment_view_c_v" />
+    <fragment
+        android:id="@+id/findJobFragment"
+        android:name="com.soysin.mobile.jobseeker.findJob.FindJobFragment"
+        android:label="fragment_find_job"
+        tools:layout="@layout/fragment_find_job" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.soysin.mobile.jobseeker.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
