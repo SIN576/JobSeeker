@@ -31,9 +31,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     TextView btn_login;
-    ImageView btn_back;
     String gender;
-    RadioButton r_male,r_female;
     RadioGroup radioGroup;
 
     Button btn_register;
@@ -45,8 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        getSupportActionBar().hide();
 
         btn_login = findViewById(R.id.btn_login_register);;
         radioGroup = findViewById(R.id.r_group);

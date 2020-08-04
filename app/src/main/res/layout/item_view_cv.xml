@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="3dp"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="5dp"
         app:cardElevation="1dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <LinearLayout
         android:paddingBottom="15dp"
@@ -84,11 +85,11 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_orange"
+            android:layout_marginTop="10dp"
             android:text="View CV"
+            android:textSize="10sp"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"/>
+            android:layout_height="40dp"/>
 
     </LinearLayout>
     </androidx.cardview.widget.CardView>

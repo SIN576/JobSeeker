@@ -3,40 +3,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".viewCV.ViewCVFragment">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:background="@drawable/background_header"
-            android:id="@+id/view_cv_header"
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/border"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="Search job...."
+                android:layout_height="40dp"/>
+
             <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_search"
+                android:padding="8dp"
+                android:src="@drawable/ic_settings"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/border"
                 android:layout_width="40dp"
-                android:layout_height="30dp"/>
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:text="JOB WANTED"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="40dp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@+id/view_cv_header"
-            android:id="@+id/view_cv_recycler_view"
+        <androidx.core.widget.NestedScrollView
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="#0000ff"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:text="Type of CV"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:textSize="15dp"
+                        android:text="show all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/recycler_view_view_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="#0000ff"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:text="Recent CV"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textSize="15dp"
+                        android:text="show all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/recycler_view_view_cv_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 </FrameLayout>

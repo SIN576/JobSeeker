@@ -9,6 +9,7 @@
     tools:context=".LoginActivity">
 
     <ImageView
+        android:contentDescription="@string/logo"
         android:layout_marginBottom="40dp"
         android:src="@drawable/logojob"
         android:layout_width="150dp"
@@ -25,7 +26,7 @@
 
             android:inputType="textEmailAddress"
             android:drawablePadding="10dp"
-            android:hint="Username"
+            android:hint="@string/username"
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_width="300dp"
@@ -44,7 +45,7 @@
 
             android:inputType="textPassword"
             android:drawablePadding="10dp"
-            android:hint="Password"
+            android:hint="@string/password"
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_width="300dp"
@@ -57,7 +58,7 @@
     <Button
         android:id="@+id/btn_login_login"
         android:layout_marginTop="25dp"
-        android:text="Login"
+        android:text="@string/Login"
         android:textColor="#fff"
         android:layout_gravity="center"
         android:layout_width ="wrap_content"
@@ -73,15 +74,15 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="you don't have account? "
+            android:text="@string/youDoNotHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/btn_register"
+            android:id="@+id/login_register"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="register"
+            android:text="@string/register"
             android:textColor="#ff0000" />
 
     </LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@drawable/icon_cv"
+            android:id="@+id/view_cv_id"
+            android:title="View CV" />
+        <item
+            android:icon="@drawable/type_of_cv"
+            android:id="@+id/type_of_job_id"
+            android:title="Type of jobs" />
+        <item
+            android:icon="@drawable/type_of_job"
+            android:id="@+id/type_of_Cv_id"
+            android:title="Type of CV" />
+        <item
+            android:visible="false"
+            android:icon="@drawable/ic_upload_24"
+            android:id="@+id/upload_job_id"
+            android:title="post job" />
+        <item
+            android:icon="@drawable/ic_upload_24"
+            android:id="@+id/upload_job_Cv_id"
+            android:title="post CV" />
+    </group>
+
+    <item android:title="communicate">
+        <menu>
+            <item
+                android:icon="@drawable/ic_email_24"
+                android:id="@+id/inbox_id"
+                android:title="inbox" />
+            <item
+                android:icon="@drawable/ic_send_24"
+                android:id="@+id/send_id"
+                android:title="send" />
+        </menu>
+    </item>
+    <item android:title="setting">
+        <menu>
+            <item
+                android:icon="@drawable/ic_baseline_account_box_24"
+                android:id="@+id/account_id"
+                android:title="Account" />
+            <item
+                android:icon="@drawable/logout"
+                android:id="@+id/log_out_id"
+                android:title="Log out" />
+        </menu>
+    </item>
+
+</menu>

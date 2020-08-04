@@ -17,6 +17,7 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
+import com.soysin.mobile.jobseeker.databinding.ActivityLoginBinding;
 import com.soysin.mobile.jobseeker.model.Login;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
@@ -29,8 +30,8 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView btn_register,tv_test_email;
-    ImageView btn_back;
+    TextView btn_register;
+    ActivityLoginBinding binding;
     Button btn_login;
     TextInputLayout ed_username,ed_password;
 
@@ -38,15 +39,13 @@ public class LoginActivity extends AppCompatActivity {
 
     ApiService apiService;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        getSupportActionBar().hide();
-        btn_register = findViewById(R.id.btn_register);
         btn_login = findViewById(R.id.btn_login_login);
         ed_password = findViewById(R.id.ed_password);
         ed_username = findViewById(R.id.ed_username);
@@ -60,14 +59,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (! validateUsername() || validatePassword()){
-                    Intent intent = new Intent(getApplicationContext(),AppBarActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
                     startActivity(intent);
                 }
 
             }
         });
-
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        binding.loginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);

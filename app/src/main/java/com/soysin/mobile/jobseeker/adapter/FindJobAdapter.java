@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.model.FindJobModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
 
     static class FindJobHolder extends RecyclerView.ViewHolder {
         TextView tv_email;
+        ImageView imageView;
         public FindJobHolder(@NonNull View itemView) {
             super(itemView);
             tv_email = itemView.findViewById(R.id.tv_email);

@@ -7,18 +7,8 @@
         android:title="HomePage" />
 
     <item
-        android:id="@+id/item_find_job"
-        android:icon="@drawable/job_icon"
-        android:title="Find Job" />
-
-    <item
         android:id="@+id/item_view_cv"
         android:icon="@drawable/icon_cv"
         android:title="View CV" />
-
-    <item
-        android:id="@+id/item_person"
-        android:icon="@drawable/ic_person_outline"
-        android:title="Person" />
 
 </menu>

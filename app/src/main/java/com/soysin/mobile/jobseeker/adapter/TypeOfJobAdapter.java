@@ -29,7 +29,7 @@ public class TypeOfJobAdapter extends RecyclerView.Adapter<TypeOfJobAdapter.Type
     @NonNull
     @Override
     public TypeOfJobHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_type_of_job,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_type_of_job,null,false);
         return new TypeOfJobHolder(view);
     }
 

@@ -16,41 +16,96 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:textColor="#000"
-                android:textSize="25sp"
-                android:text="Mobile Developer"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title_job"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:text="Mobile Developer"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_below="@+id/title_job"
+                    android:id="@+id/salary"
+                    android:textSize="15sp"
+                    android:text="$200-$500/month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/salary"
+                    android:layout_below="@+id/title_job"
+                    android:id="@+id/term"
+                    android:textSize="15sp"
+                    android:text="full-time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-            <TextView
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:text="Contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_baseline_turned_in_not_24"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_email"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:text="soysin@gmail.com"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:text="087497202"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_img"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp">
+                    <ImageView
+                        android:id="@+id/img_pro"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_launcher_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
 
-            <Button
-                android:text="See more"
-                android:textAllCaps="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/card_img"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name_company"
+                        android:textColor="#000"
+                        android:textSize="15sp"
+                        android:text="Trendsec Solution"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:textSize="12sp"
+                        android:text="Sangkat Teuk Laork II"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/date_ago"
+                    android:textSize="12sp"
+                    android:text="2 day ago"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
