@@ -50,9 +50,9 @@ public class PersonFragment extends Fragment {
         findJobModels.add(new FindJobModel("khornsanit22@gmail.com"));
         findJobModels.add(new FindJobModel("pothsatyavotha22@gmail.com"));
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        adapter = new ViewCVAdapter(root.getContext(),findJobModels);
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+//        adapter = new ViewCVAdapter(root.getContext(),findJobModels);
+//        recyclerView.setAdapter(adapter);
 
         btn_account_info.setOnClickListener(new View.OnClickListener() {
             @Override

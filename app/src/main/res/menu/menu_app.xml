@@ -3,9 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:icon="@drawable/icon_cv"
+            android:icon="@drawable/ic_person_outline"
             android:id="@+id/view_cv_id"
-            android:title="View CV" />
+            android:title="Profile" />
         <item
             android:icon="@drawable/type_of_cv"
             android:id="@+id/type_of_job_id"

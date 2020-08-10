@@ -6,10 +6,26 @@ import com.google.gson.annotations.SerializedName;
 public class Login {
 
     @Expose
-    @SerializedName("sucess")
-    private int sucess;
+    @SerializedName("success")
+    private int success;
+    @Expose
+    @SerializedName("token")
+    private String apiToken;
 
-    public int getSucess() {
-        return sucess;
+    @Expose
+    @SerializedName("id")
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public String getApiToken() {
+        return apiToken;
     }
 }
+
