@@ -128,6 +128,7 @@ public class NewJobActivity extends AppCompatActivity implements NavigationView.
                 myDAO.deleteAccount(account);
                 Intent intent12= new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent12);
+                finish();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START,true);
