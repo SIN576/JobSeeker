@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.soysin.mobile.jobseeker.ProfileActivity;
 import com.soysin.mobile.jobseeker.R;
+import com.soysin.mobile.jobseeker.TypeOfCvActivity;
+import com.soysin.mobile.jobseeker.TypeOfJobDetailActivity;
+import com.soysin.mobile.jobseeker.ViewCVDetailActivity;
 import com.soysin.mobile.jobseeker.adapter.TypeOfJobAdapter;
 import com.soysin.mobile.jobseeker.adapter.ViewCVAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
@@ -37,12 +40,13 @@ import retrofit2.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickItemListener {
+public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickItemListener, TypeOfJobAdapter.OnClickItemListener {
 
     private RecyclerView recyclerView,recyclerView1;
     private View root;
     private ViewCVAdapter adapter;
     Account account;
+    List<Cv> cvList;
 
 
     public ViewCVFragment(Account account) {
@@ -71,6 +75,7 @@ public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickIte
         TypeOfJobAdapter typeOfJobAdapter = new TypeOfJobAdapter(typeOfJobs,getActivity());
         recyclerView.setAdapter(typeOfJobAdapter);
 
+        typeOfJobAdapter.setOnClickItemListener(this);
         recyclerView1 = root.findViewById(R.id.recycler_view_view_cv_vertical);
         getPostCv();
         return root;
@@ -87,10 +92,10 @@ public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickIte
                 if (!response.isSuccessful()){
                     Toast.makeText(getContext(),"error:"+response.message(),Toast.LENGTH_LONG).show();
                 }
-                List<Cv> cvList = response.body();
+                cvList = response.body();
                 if (cvList != null){
                     Log.e("success","success");
-                    recyclerView1.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                    recyclerView1.setLayoutManager(new GridLayoutManager(getActivity(),1));
                     adapter = new ViewCVAdapter(getActivity(),cvList);
                     recyclerView1.setAdapter(adapter);
                     adapter.setOnClickItemListener(ViewCVFragment.this);
@@ -108,7 +113,15 @@ public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickIte
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        Intent intent = new Intent(getActivity(), ViewCVDetailActivity.class);
+        intent.putExtra("id",cvList.get(position).getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickJobType(TypeOfJob typeOfJob) {
+        Intent intent = new Intent(getActivity(), TypeOfCvActivity.class);
+        intent.putExtra("title",typeOfJob.getJob_status());
         startActivity(intent);
     }
 }

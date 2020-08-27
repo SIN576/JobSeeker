@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "error: " + response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "errorr: " + response.message(), Toast.LENGTH_LONG).show();
                 }
                 Log.d("Login", response.isSuccessful() + "");
                 Toast.makeText(getApplicationContext(), "fails: " + response.message(), Toast.LENGTH_LONG).show();
@@ -107,10 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (login != null && login.getSuccess() == 1) {
                     MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
                     MyDAO myDAO = myAppDatabase.getMyDao();
-                    myDAO.createAccount(new Account(0,login.getApiToken(),login.getId()));
+                    myDAO.createAccount(new Account(0,login.getUser().getApi_token(),login.getUser().getId(),login.getUser().getRole(),login.getUser().getProfile()));
                     Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
-                    intent.putExtra("token",login.getApiToken());
-                    intent.putExtra("id",login.getId());
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "error: don't have account ", Toast.LENGTH_LONG);

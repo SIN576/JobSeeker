@@ -1,4 +1,4 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.findJob;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +14,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
+import com.soysin.mobile.jobseeker.NewJobActivity;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostJobBinding;
+import com.soysin.mobile.jobseeker.db.MyAppDatabase;
+import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.model.Account;
+import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 import com.soysin.mobile.jobseeker.util.FileUtils;
+import com.soysin.mobile.jobseeker.GetRequestBody;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +39,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.Field;
 
 public class PostJobActivity extends AppCompatActivity {
 
@@ -41,6 +47,8 @@ public class PostJobActivity extends AppCompatActivity {
     private int PICK_IMAGE_FROM_GALLERY_REQUEST = 1;
     File file;
     Account account;
+    Bundle bundle;
+    PostJob postJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +71,33 @@ public class PostJobActivity extends AppCompatActivity {
                     new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST);
         }
-        account = new Account(0,getIntent().getStringExtra("token"),getIntent().getIntExtra("id",0));
+        MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
+        MyDAO myDAO = myAppDatabase.getMyDao();
+        account = myDAO.getAccount(0);
 
-        binding.btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postJob(file);
+
+        if (getIntent().getExtras()!=null){
+            bundle = getIntent().getBundleExtra("bundle_key");
+            String action = bundle.getString("action");
+            if (action.equals("edit")){
+                edit();
+                binding.btnPost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        update();
+                    }
+                });
             }
-        });
+            else {
+                binding.btnPost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        postJob(file);
+                    }
+                });
+            }
+        }
+
         binding.postJobButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +112,40 @@ public class PostJobActivity extends AppCompatActivity {
                 );
             }
         });
+    }
+    private void update(){
+        if(file != null){
+            RequestBody requestBody = GetRequestBody.getRequestBody(file, (int) account.getAccountId());
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"not file",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void edit(){
+
+        postJob = new PostJob((int) account.getAccountId(),bundle.getString("email"),
+                bundle.getString("image"),bundle.getString("experience"),
+                bundle.getString("phone_number"),bundle.getString("address"),
+                bundle.getString("company_name"), bundle.getString("requirement"),
+                bundle.getString("term"),bundle.getString("title"),
+                bundle.getString("last_date"),bundle.getInt("id"));
+
+        binding.titleApp.setText("Edit");
+        binding.btnPost.setText("Save");
+        binding.postJobButtonChooseImage.setText("change image");
+
+        binding.edCompanyName.setText(postJob.getCompany_name());
+        binding.edTerm.setText(postJob.getTerm());
+        binding.edTitle.setText(postJob.getTitle());
+        binding.edExperience.setText(bundle.getString("requirement"));
+        binding.edLastDate.setText(postJob.getLast_date());
+        binding.edAddress.setText(postJob.getAddress());
+        binding.edEmail.setText(bundle.getString("email"));
+        binding.edNumberPhone.setText(bundle.getString("phone_number"));
+        Picasso.get()
+                .load(Connection.BASEURL+"/api/postjob/getdownload/"+postJob.getId())
+                .into(binding.postJobImage);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -126,7 +187,7 @@ public class PostJobActivity extends AppCompatActivity {
         final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         MultipartBody.Part fileImage = MultipartBody.Part.createFormData("photo",file.getName(),requestFile);
         requestBodyBuilder.addPart(fileImage);
-        requestBodyBuilder.addFormDataPart("user_id",account.getId()+"");
+        requestBodyBuilder.addFormDataPart("user_id",account.getAccountId()+"");
         requestBodyBuilder.addFormDataPart("company_name",binding.postJobEdNameCompany.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("term",binding.postJobEdTerm.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("email",binding.postJobEdEmail.getEditText().getText().toString());
@@ -149,7 +210,7 @@ public class PostJobActivity extends AppCompatActivity {
                     return;
                 }
                 Log.e("success: ",response.message());
-                Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NewJobActivity.class);
                 intent.putExtra("token",account.getToken());
                 intent.putExtra("id",account.getId());
                 startActivity(intent);

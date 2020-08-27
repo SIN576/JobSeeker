@@ -19,6 +19,10 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityRegisterBinding;
+import com.soysin.mobile.jobseeker.db.MyAppDatabase;
+import com.soysin.mobile.jobseeker.db.MyDAO;
+import com.soysin.mobile.jobseeker.model.Account;
+import com.soysin.mobile.jobseeker.model.Login;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
 import okhttp3.MediaType;
@@ -40,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     ActivityRegisterBinding binding;
     AwesomeValidation awesomeValidation;
-    EditText ed_r_full_name,ed_r_email,ed_r_password,ed_r_conform_password;
+    EditText ed_r_email,ed_r_password,ed_r_conform_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +94,11 @@ public class RegisterActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.r_male:
                    role = 2;
+                   binding.companyName.setVisibility(View.VISIBLE);
                     break;
                 case R.id.r_female:
                     role = 3;
+                    binding.companyName.setVisibility(View.GONE);
                     break;
             }
     }
@@ -101,26 +107,38 @@ public class RegisterActivity extends AppCompatActivity {
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
 
-        Call<ResponseBody> call = apiService.userRegister(binding.edFirstNameRegister.getText().toString(),
+        Call<Login> call = apiService.userRegister(binding.edFirstNameRegister.getText().toString(),
                 binding.edLastNameRegister.getText().toString(),
+                binding.edNumberPhoneRegister.getText().toString(),
                 binding.edEmailRegister.getText().toString(),
                 binding.edPasswordRegister.getText().toString(),
+                binding.edConformPasswordRegister.getText().toString(),
                 "Trendsec Solution",
                 "jdha",
-                "20 May 2000");
+                "20 May 2000",role);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<Login>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Login> call, Response<Login> response) {
                 if (!response.isSuccessful()){
                     Log.e("error", response.message());
                     return;
                 }
-                Log.e("success", response.message());
+                Login login = response.body();
+                if (response.body()!= null && login.getSuccess() != 0){
+                    MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
+                    MyDAO myDAO = myAppDatabase.getMyDao();
+
+                    myDAO.createAccount(new Account(0,login.getUser().getApi_token(),login.getUser().getId(),login.getUser().getRole(),login.getUser().getProfile()));
+
+                    Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
+                    startActivity(intent);
+                }
+                Toast.makeText(getApplicationContext(),response.message(),Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Login> call, Throwable t) {
                 Log.e("error", t.getMessage());
             }
         });

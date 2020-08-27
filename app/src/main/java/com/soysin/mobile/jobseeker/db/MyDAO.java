@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.soysin.mobile.jobseeker.model.Account;
 
@@ -19,5 +20,8 @@ public interface MyDAO {
 
     @Query("SELECT * FROM accounts WHERE id ==:accountId")
     public Account getAccount(long accountId);
+
+    @Update
+    public void updateAccount(Account account);
 
 }

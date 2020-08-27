@@ -52,7 +52,7 @@
                     <TextView
                         android:textColor="#0000ff"
                         android:textStyle="bold"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:text="Type of CV"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -82,7 +82,7 @@
                     <TextView
                         android:textColor="#0000ff"
                         android:textStyle="bold"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:text="Recent CV"
                         android:layout_width="0dp"
                         android:layout_weight="1"

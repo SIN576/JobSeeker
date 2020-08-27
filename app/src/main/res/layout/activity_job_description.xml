@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:background="#ccc"
     android:layout_height="match_parent"
-    tools:context=".JobDescriptionActivity">
+    tools:context=".findJob.JobDescriptionActivity">
 
     <LinearLayout
+        tools:viewBindingIgnore="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -234,6 +235,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <Button
+        android:id="@+id/btnApply"
         android:layout_alignParentRight="true"
         android:background="#000"
         android:text="Apply now"

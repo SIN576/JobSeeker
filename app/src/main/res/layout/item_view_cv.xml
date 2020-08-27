@@ -1,98 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="3dp"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="5dp"
-        app:cardElevation="1dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        android:orientation="vertical"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_launcher_background"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_centerVertical="true"
-                android:paddingLeft="15dp"
-                android:layout_toRightOf="@id/profile_image"
+                android:padding="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="#000"
-                    android:textSize="20dp"
-                    android:text="Soy Sin"
-                    android:id="@+id/tv_cv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:textSize="10dp"
-                    android:text="post: 15/05/2020"
-                    android:id="@+id/tv_cv_date_post"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/tv_cv_skill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile Developer"
+                        android:textColor="#000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_below="@+id/tv_cv_skill"
+                        android:id="@+id/salary"
+                        android:textSize="12sp"
+                        android:text="Experience: "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_cv_year_of_developer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_cv_skill"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/salary"
+                        android:text="full-time"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/more_option"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_baseline_more_horiz_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_img"
+                        app:cardElevation="0dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp">
+                        <ImageView
+                            android:id="@+id/profile_image"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_launcher_background"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/card_img"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_cv_name"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:text="Trendsec Solution"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/tv_cv_email"
+                            android:textSize="12sp"
+                            android:text="Sangkat Teuk Laork II"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_cv_date_post"
+                        android:textSize="12sp"
+                        android:text="2 day ago"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
             </LinearLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:textColor="#000"
-            android:textSize="15dp"
-            android:text="Mobile Developer"
-            android:id="@+id/tv_cv_skill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:paddingTop="5dp"
-            android:textSize="12dp"
-            android:text="3 year"
-            android:id="@+id/tv_cv_year_of_developer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:paddingTop="5dp"
-            android:textSize="12dp"
-            android:text="soysin22@gmail.com"
-            android:id="@+id/tv_cv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:paddingTop="5dp"
-            android:textSize="12dp"
-            android:text="087497202"
-            android:id="@+id/tv_cv_telephone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:layout_marginTop="10dp"
-            android:text="View CV"
-            android:textSize="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"/>
-
-    </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
-</RelativeLayout>
+</LinearLayout>

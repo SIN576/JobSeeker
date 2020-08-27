@@ -6,10 +6,21 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "accounts")
 public class Account {
-    public Account(int id,String token,long accountId) {
+    public int getAccountRole() {
+        return accountRole;
+    }
+
+
+    public Account(int id, String token, long accountId, int accountRole, String nameImageProfile) {
         this.token = token;
         this.id = id;
         this.accountId = accountId;
+        this.accountRole = accountRole;
+        this.nameImageProfile = nameImageProfile;
+    }
+
+    public String getNameImageProfile() {
+        return nameImageProfile;
     }
 
     public String getToken() {
@@ -22,12 +33,17 @@ public class Account {
 
     @ColumnInfo(name = "account_token")
     private String token;
+    @ColumnInfo(name = "name_image_profile")
+    private String nameImageProfile;
 
     @PrimaryKey(autoGenerate = false)
     private int id;
 
     @ColumnInfo(name = "account_id")
     private long accountId;
+
+    @ColumnInfo(name = "account_role")
+    private int accountRole;
 
     public long getAccountId() {
         return accountId;

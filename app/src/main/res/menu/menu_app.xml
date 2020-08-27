@@ -7,10 +7,12 @@
             android:id="@+id/view_cv_id"
             android:title="Profile" />
         <item
+            android:visible="false"
             android:icon="@drawable/type_of_cv"
             android:id="@+id/type_of_job_id"
             android:title="Type of jobs" />
         <item
+            android:visible="false"
             android:icon="@drawable/type_of_job"
             android:id="@+id/type_of_Cv_id"
             android:title="Type of CV" />

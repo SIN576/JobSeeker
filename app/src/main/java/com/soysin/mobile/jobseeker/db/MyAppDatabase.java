@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.soysin.mobile.jobseeker.model.Account;
 
 
-@Database(entities = {Account.class},version = 2)
+@Database(entities = {Account.class},version = 4)
 public abstract class MyAppDatabase extends RoomDatabase {
     //create database instance
     private static MyAppDatabase myAppDatabase;

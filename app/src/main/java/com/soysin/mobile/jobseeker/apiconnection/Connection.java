@@ -6,9 +6,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Connection {
-
+    public final static String BASEURL="http://192.168.11.215:8000";
     public Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.43.183:8000")
+            .baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -17,7 +17,7 @@ public class Connection {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         return  new Retrofit.Builder()
-                .baseUrl("http://192.168.43.183:8000")
+                .baseUrl(BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

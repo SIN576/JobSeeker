@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 public class FileUtils {
     private static final int EOF = -1;
@@ -105,5 +106,21 @@ public class FileUtils {
             count += n;
         }
         return count;
+    }
+
+    public static String createImageFile(Context context){
+        try {
+            // Create an image file name
+            String imageFileName = "JPEG_" + UUID.randomUUID().toString() + "_";
+            File storageDir = context.getFilesDir();
+            File image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+            return image.getAbsolutePath();
+        }catch (Exception ex){
+            return null;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.findJob;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,10 +11,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
-import com.soysin.mobile.jobseeker.adapter.TypeOfJobAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivitySearchJobBinding;
-import com.soysin.mobile.jobseeker.model.FindJobModel;
 import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
@@ -111,7 +109,7 @@ public class SearchJobActivity extends AppCompatActivity implements FindJobAdapt
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(this,JobDescriptionActivity.class);
+        Intent intent = new Intent(this, JobDescriptionActivity.class);
         intent.putExtra("id",postJobs.get(position).getId());
         intent.putExtra("token",token);
         startActivity(intent);

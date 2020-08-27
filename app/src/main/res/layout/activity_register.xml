@@ -21,6 +21,51 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="vertical">
+           <LinearLayout
+               android:layout_gravity="center"
+               android:layout_marginTop="15dp"
+               android:orientation="horizontal"
+               android:layout_width="300dp"
+               android:layout_height="wrap_content">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:padding="5dp"
+                   android:text="option: "
+                   android:textColor="#000"
+                   android:textSize="15sp" />
+
+               <RadioGroup
+                   android:id="@+id/r_group"
+                   android:orientation="horizontal"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <RadioButton
+                       android:onClick="onClickRadioButtonRegister"
+                       android:id="@+id/r_male"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                       android:text="employer"
+                       android:textSize="15sp"
+                       tools:ignore="OnClick" />
+
+                   <RadioButton
+                       android:onClick="onClickRadioButtonRegister"
+                       android:id="@+id/r_female"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                       android:text="seeker"
+                       android:textSize="15sp"
+                       tools:ignore="OnClick" />
+
+               </RadioGroup>
+
+           </LinearLayout>
+
            <com.google.android.material.textfield.TextInputLayout
                android:layout_gravity="center"
                android:layout_width="wrap_content"
@@ -50,6 +95,41 @@
                    android:layout_width="300dp"
                    android:layout_height="50dp"/>
            </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_gravity="center"
+               android:id="@+id/DOB"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/ed_DOB_register"
+                   android:inputType="textEmailAddress"
+                   android:drawablePadding="10dp"
+                   android:hint="date of birth"
+                   android:layout_gravity="center"
+                   android:padding="5dp"
+                   android:layout_width="300dp"
+                   android:layout_height="50dp"/>
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_gravity="center"
+               android:id="@+id/companyName"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/ed_companyName_register"
+                   android:inputType="textEmailAddress"
+                   android:drawablePadding="10dp"
+                   android:visibility="visible"
+                   android:hint="company name"
+                   android:layout_gravity="center"
+                   android:padding="5dp"
+                   android:layout_width="300dp"
+                   android:layout_height="50dp"/>
+           </com.google.android.material.textfield.TextInputLayout>
+
            <com.google.android.material.textfield.TextInputLayout
                android:layout_gravity="center"
                android:layout_width="wrap_content"
@@ -59,6 +139,20 @@
                    android:inputType="numberDecimal"
                    android:drawablePadding="10dp"
                    android:hint="Phone number"
+                   android:layout_gravity="center"
+                   android:padding="5dp"
+                   android:layout_width="300dp"
+                   android:layout_height="50dp"/>
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_gravity="center"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:id="@+id/ed_address_register"
+                   android:inputType="textEmailAddress"
+                   android:drawablePadding="10dp"
+                   android:hint="address"
                    android:layout_gravity="center"
                    android:padding="5dp"
                    android:layout_width="300dp"
@@ -120,53 +214,6 @@
                    android:layout_height="50dp"/>
 
            </com.google.android.material.textfield.TextInputLayout>
-
-
-           <LinearLayout
-               android:layout_gravity="center"
-               android:layout_marginTop="15dp"
-               android:orientation="horizontal"
-               android:layout_width="300dp"
-               android:layout_height="wrap_content">
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:padding="5dp"
-                   android:text="option: "
-                   android:textColor="#000"
-                   android:textSize="15sp" />
-
-               <RadioGroup
-                   android:id="@+id/r_group"
-                   android:orientation="horizontal"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content">
-
-                   <RadioButton
-                       android:onClick="onClickRadioButtonRegister"
-                       android:id="@+id/r_male"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:padding="5dp"
-                       android:text="employer"
-                       android:textSize="15sp"
-                       tools:ignore="OnClick" />
-
-                   <RadioButton
-                       android:onClick="onClickRadioButtonRegister"
-                       android:id="@+id/r_female"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:padding="5dp"
-                       android:text="seeker"
-                       android:textSize="15sp"
-                       tools:ignore="OnClick" />
-
-               </RadioGroup>
-
-           </LinearLayout>
-
            <Button
                android:id="@+id/btn_register_register"
                android:layout_marginTop="25dp"
@@ -198,6 +245,7 @@
                    android:textColor="#ff0000" />
 
            </LinearLayout>
+
        </LinearLayout>
    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

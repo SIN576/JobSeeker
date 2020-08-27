@@ -23,8 +23,8 @@ public class TypeOfJobAdapter extends RecyclerView.Adapter<TypeOfJobAdapter.Type
 
     OnClickItemListener mListener;
 
-    public interface OnClickItemListener{
-        public void onItemClick(int position);
+    public interface OnClickItemListener {
+        public void onClickJobType(TypeOfJob typeOfJob);
 
     }
 
@@ -40,13 +40,15 @@ public class TypeOfJobAdapter extends RecyclerView.Adapter<TypeOfJobAdapter.Type
     @NonNull
     @Override
     public TypeOfJobHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_type_of_job,null,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_type_of_job, null, false);
         return new TypeOfJobHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TypeOfJobHolder holder, int position) {
-            holder.textView_type_of_job.setText(typeOfJobs.get(position).getJob_status());
+        TypeOfJob typeOfJob = typeOfJobs.get(position);
+        holder.textView_type_of_job.setText(typeOfJob.getJob_status());
+        holder.setTypeOfJob(typeOfJob);
         Picasso.get().load(typeOfJobs.get(position).getUrl()).into(holder.imageView_type_of_job);
     }
 
@@ -59,6 +61,7 @@ public class TypeOfJobAdapter extends RecyclerView.Adapter<TypeOfJobAdapter.Type
 
         public ImageView imageView_type_of_job;
         public TextView textView_type_of_job;
+        private TypeOfJob typeOfJob;
 
         public TypeOfJobHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,14 +72,18 @@ public class TypeOfJobAdapter extends RecyclerView.Adapter<TypeOfJobAdapter.Type
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mListener != null){
+                    if (mListener != null) {
                         int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            mListener.onItemClick(position);
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onClickJobType(typeOfJob);
                         }
                     }
                 }
             });
+        }
+
+        public void setTypeOfJob(TypeOfJob typeOfJob) {
+            this.typeOfJob = typeOfJob;
         }
     }
 }

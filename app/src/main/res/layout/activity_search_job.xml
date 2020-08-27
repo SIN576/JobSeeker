@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#ccc"
     android:layout_height="match_parent"
-    tools:context=".SearchJobActivity">
+    tools:context=".findJob.SearchJobActivity">
     <LinearLayout
         android:paddingTop="5dp"
         android:paddingRight="5dp"

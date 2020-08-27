@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#ccc"
     android:layout_height="match_parent"
-    tools:context=".PostJobActivity">
+    tools:context=".findJob.PostJobActivity">
 
     <RelativeLayout
         android:padding="10dp"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-
+                    android:id="@+id/edCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="company name"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-
+                        android:id="@+id/edTerm"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:hint="term"
@@ -113,6 +113,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/edTitle"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:hint="title"
@@ -125,7 +126,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-
+                    android:id="@+id/edExperience"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="requirement"
@@ -137,7 +138,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-
+                    android:id="@+id/edLastDate"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="Last date"
@@ -149,6 +150,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edEmail"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="email"
@@ -161,7 +163,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-
+                    android:id="@+id/edAddress"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="address"
@@ -174,6 +176,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edNumberPhone"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="Phone number"
