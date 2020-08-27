@@ -141,6 +141,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
                     bundle.putString("image",findJobModels.get(getLayoutPosition()).getImage());
                     bundle.putInt("id",findJobModels.get(getAdapterPosition()).getId());
                     bundle.putString("company_name",findJobModels.get(getAdapterPosition()).getCompany_name());
+                    Log.e("company_name",findJobModels.get(getAdapterPosition()).getCompany_name());
                     bundle.putString("term",findJobModels.get(getAdapterPosition()).getTerm());
                     bundle.putString("title",findJobModels.get(getAdapterPosition()).getTitle());
                     bundle.putString("requirement",findJobModels.get(getAdapterPosition()).getRequirement());
@@ -151,7 +152,6 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
                     bundle.putString("phone_number",findJobModels.get(getAdapterPosition()).getPhone_number());
                     intent.putExtra("bundle_key", bundle);
                     context.startActivity(intent);
-                    Log.e("menu message","action_edit: "+findJobModels.get(getAdapterPosition()).getId());
                     return true;
                 case R.id.action_delete:
                     DeleteCV.DeleteJob(findJobModels.get(getAdapterPosition()).getId(),token);

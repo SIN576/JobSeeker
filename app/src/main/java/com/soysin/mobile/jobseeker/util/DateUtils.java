@@ -63,8 +63,6 @@ public class DateUtils {
             }
 
         } catch (ParseException e) {
-            e.printStackTrace();
-            Log.e("ConvTimeE", e.getMessage());
             convTime = getStringTimeAgo(dataDate);
         }
 

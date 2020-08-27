@@ -37,7 +37,24 @@
 
     <string-array name="typeOfJob">
         <item>All</item>
-        <item>full-time</item>
-        <item>part-time</item>
+        <item>Full time</item>
+        <item>Part time</item>
+        <item>Internship</item>
+    </string-array>
+
+    <string-array name="typeOfJobPost">
+        <item>Full time</item>
+        <item>Part time</item>
+        <item>Internship</item>
+    </string-array>
+    <string-array name="typeOfJobPost1">
+        <item>Part time</item>
+        <item>Full time</item>
+        <item>Internship</item>
+    </string-array>
+    <string-array name="typeOfJobPost2">
+        <item>Internship</item>
+        <item>Full time</item>
+        <item>Part time</item>
     </string-array>
 </resources>

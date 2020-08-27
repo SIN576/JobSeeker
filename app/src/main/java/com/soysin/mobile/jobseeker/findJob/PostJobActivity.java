@@ -14,9 +14,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.soysin.mobile.jobseeker.NewJobActivity;
+import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostJobBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
@@ -40,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class PostJobActivity extends AppCompatActivity {
+public class PostJobActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     ActivityPostJobBinding binding;
     private static final int MY_PERMISSIONS_REQUEST = 100;
@@ -49,6 +52,7 @@ public class PostJobActivity extends AppCompatActivity {
     Account account;
     Bundle bundle;
     PostJob postJob;
+    private String term="Full time";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +116,42 @@ public class PostJobActivity extends AppCompatActivity {
                 );
             }
         });
+
+
+        if(term.equals("Full time")){
+            spinner();
+        }else if(term.equals("Part time")){
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.typeOfJobPost1, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+            binding.spinnerPostJob.setAdapter(adapter);
+            binding.spinnerPostJob.setOnItemSelectedListener(this);
+
+        }else {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.typeOfJobPost2, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+            binding.spinnerPostJob.setAdapter(adapter);
+            binding.spinnerPostJob.setOnItemSelectedListener(this);
+        }
+    }
+    private void spinner(){
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.typeOfJobPost, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        binding.spinnerPostJob.setAdapter(adapter);
+        binding.spinnerPostJob.setOnItemSelectedListener(this);
     }
     private void update(){
         if(file != null){
-            RequestBody requestBody = GetRequestBody.getRequestBody(file, (int) account.getAccountId());
+            RequestBody requestBody = GetRequestBody.getRequestBody(file, (int) account.getAccountId(),term);
         }
         else {
             Toast.makeText(getApplicationContext(),"not file",Toast.LENGTH_LONG).show();
@@ -125,18 +161,18 @@ public class PostJobActivity extends AppCompatActivity {
     private void edit(){
 
         postJob = new PostJob((int) account.getAccountId(),bundle.getString("email"),
-                bundle.getString("image"),bundle.getString("experience"),
-                bundle.getString("phone_number"),bundle.getString("address"),
-                bundle.getString("company_name"), bundle.getString("requirement"),
+                bundle.getString("phone_number"),bundle.getString("experience"),
+                bundle.getString("company_name"),bundle.getString("address"),
+                bundle.getString("last_date"),bundle.getString("requirement"),
                 bundle.getString("term"),bundle.getString("title"),
-                bundle.getString("last_date"),bundle.getInt("id"));
+                bundle.getString("image"),bundle.getInt("id"));
 
         binding.titleApp.setText("Edit");
         binding.btnPost.setText("Save");
         binding.postJobButtonChooseImage.setText("change image");
 
+        term = postJob.getTerm();
         binding.edCompanyName.setText(postJob.getCompany_name());
-        binding.edTerm.setText(postJob.getTerm());
         binding.edTitle.setText(postJob.getTitle());
         binding.edExperience.setText(bundle.getString("requirement"));
         binding.edLastDate.setText(postJob.getLast_date());
@@ -189,12 +225,13 @@ public class PostJobActivity extends AppCompatActivity {
         requestBodyBuilder.addPart(fileImage);
         requestBodyBuilder.addFormDataPart("user_id",account.getAccountId()+"");
         requestBodyBuilder.addFormDataPart("company_name",binding.postJobEdNameCompany.getEditText().getText().toString());
-        requestBodyBuilder.addFormDataPart("term",binding.postJobEdTerm.getEditText().getText().toString());
+        requestBodyBuilder.addFormDataPart("term",term);
         requestBodyBuilder.addFormDataPart("email",binding.postJobEdEmail.getEditText().getText().toString());
-        requestBodyBuilder.addFormDataPart("late_date",binding.postJobEdLastDate.getEditText().getText().toString());
+        requestBodyBuilder.addFormDataPart("last_date",binding.postJobEdLastDate.getEditText().getText().toString());
+        Log.e("late_date",binding.postJobEdLastDate.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("title",binding.postJobEdTitle.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("address",binding.postJobEdAddress.getEditText().getText().toString());
-        requestBodyBuilder.addFormDataPart("number_phone",binding.postJobEdPhoneNumber.getEditText().getText().toString());
+        requestBodyBuilder.addFormDataPart("phone_number",binding.postJobEdPhoneNumber.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("requirement",binding.postJobEdRequirement.getEditText().getText().toString());
 
         Retrofit retrofit = Connection.getClient();
@@ -221,5 +258,15 @@ public class PostJobActivity extends AppCompatActivity {
                 Log.e("error: ",t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        term = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

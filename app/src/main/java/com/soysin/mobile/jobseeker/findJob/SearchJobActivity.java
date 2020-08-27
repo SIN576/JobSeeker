@@ -84,7 +84,7 @@ public class SearchJobActivity extends AppCompatActivity implements FindJobAdapt
     private void getPostJob(){
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer "+token);
+        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer "+token,null);
         listCall.enqueue(new Callback<List<PostJob>>() {
             @Override
             public void onResponse(Call<List<PostJob>> call, Response<List<PostJob>> response) {

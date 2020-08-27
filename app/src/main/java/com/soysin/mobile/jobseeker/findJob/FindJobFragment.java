@@ -54,7 +54,8 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
     RecyclerView recyclerView_vertical;
     View root;
     Account account;
-    private String token;
+    private String token,text;
+
 
     FragmentFindJob2Binding binding;
 
@@ -127,7 +128,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
     private void getPostJob() {
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer " + account.getToken());
+        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer " + account.getToken(),null);
         listCall.enqueue(new Callback<List<PostJob>>() {
             @Override
             public void onResponse(Call<List<PostJob>> call, Response<List<PostJob>> response) {
@@ -135,6 +136,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
                     Log.e("error", response.message());
                 }
                 postJobs = response.body();
+                Log.e("PostJob",postJobs.get(1).getCompany_name().toString());
                 if (postJobs != null) {
                     recyclerView_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
                     adapter = new FindJobAdapter(getActivity(), postJobs);
@@ -168,7 +170,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
+         text = parent.getItemAtPosition(position).toString();
         if (text.equals("All")){
             getPostJob();
         }else {
