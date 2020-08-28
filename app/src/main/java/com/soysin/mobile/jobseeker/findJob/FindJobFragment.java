@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
     RecyclerView recyclerView_vertical;
     View root;
     Account account;
-    private String token,text;
+    private String token,text=null;
 
 
     FragmentFindJob2Binding binding;
@@ -121,14 +122,41 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
 //        recyclerView.setAdapter(typeOfJobAdapter);
 //        typeOfJobAdapter.setOnClickItemListener(this);
 
-        getPostJob();
+        getPostJob(text);
+        binding.searchJob.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
         return root;
     }
 
-    private void getPostJob() {
+    private void filter(String text){
+        List<PostJob> postJobList = new ArrayList<>();
+
+        for (PostJob postJob: postJobs){
+            if (postJob.getTitle().toLowerCase().contains(text.toLowerCase())){
+                postJobList.add(postJob);
+            }
+        }
+        adapter.filterList(postJobList);
+    }
+
+    private void getPostJob(String term) {
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer " + account.getToken(),null);
+        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer " + account.getToken(),term);
         listCall.enqueue(new Callback<List<PostJob>>() {
             @Override
             public void onResponse(Call<List<PostJob>> call, Response<List<PostJob>> response) {
@@ -136,7 +164,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
                     Log.e("error", response.message());
                 }
                 postJobs = response.body();
-                Log.e("PostJob",postJobs.get(1).getCompany_name().toString());
+//                Log.e("PostJob",postJobs.get(1).getCompany_name().toString());
                 if (postJobs != null) {
                     recyclerView_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
                     adapter = new FindJobAdapter(getActivity(), postJobs);
@@ -172,48 +200,17 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
          text = parent.getItemAtPosition(position).toString();
         if (text.equals("All")){
-            getPostJob();
+            text = null;
+            getPostJob(text);
         }else {
-            getPostJobByTerm(text);
+            Log.e("term",text);
+            getPostJob(text);
         }
     }
 
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    private void getPostJobByTerm(String term){
-        Retrofit retrofit = Connection.getClient();
-        ApiService apiService = retrofit.create(ApiService.class);
-        final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-
-        requestBodyBuilder.addFormDataPart("term",term);
-
-        RequestBody requestBody = requestBodyBuilder.build();
-
-        Call<List<PostJob>> listCall = apiService.getJobByTerm(requestBody,"Bearer " + account.getToken());
-        listCall.enqueue(new Callback<List<PostJob>>() {
-            @Override
-            public void onResponse(Call<List<PostJob>> call, Response<List<PostJob>> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("error", response.message());
-                }
-                postJobs = response.body();
-                if (postJobs != null) {
-                    recyclerView_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    adapter = new FindJobAdapter(getActivity(), postJobs);
-                    recyclerView_vertical.setAdapter(adapter);
-                    adapter.setOnClickItemListener(FindJobFragment.this);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<PostJob>> call, Throwable t) {
-                Log.e("error", t.getMessage());
-            }
-        });
 
     }
 }

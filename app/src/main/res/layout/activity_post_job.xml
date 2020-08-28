@@ -37,7 +37,7 @@
         android:layout_marginTop="10dp"
         android:textStyle="bold"
         android:layout_alignParentRight="true"
-        android:textColor="#0000ff"
+        android:textColor="#fff"
         android:text="Post"
         android:background="#fff"
         android:layout_width="wrap_content"
@@ -76,6 +76,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_name_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -83,7 +84,7 @@
                 <EditText
                     android:id="@+id/edCompanyName"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:hint="company name"
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -96,8 +97,9 @@
                     android:id="@+id/spinnerPostJob"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"/>
+                    android:layout_height="50dp"/>
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/post_job_ed_title"
                     android:layout_width="0dp"
@@ -107,12 +109,13 @@
                     <EditText
                         android:id="@+id/edTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:hint="title"
                         android:padding="5dp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_requirement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -120,11 +123,12 @@
                 <EditText
                     android:id="@+id/edExperience"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:hint="requirement"
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_last_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -132,11 +136,12 @@
                 <EditText
                     android:id="@+id/edLastDate"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:hint="Last date"
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -144,12 +149,12 @@
                 <EditText
                     android:id="@+id/edEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:hint="email"
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -163,6 +168,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -170,7 +176,7 @@
                 <EditText
                     android:id="@+id/edNumberPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:hint="Phone number"
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>

@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.PixelCopy;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityJobDescriptionBinding;
@@ -80,7 +78,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
                     binding.requirement.setText(postJob.getRequirement());
                     binding.experience.setText(postJob.getExperience());
                     Picasso.get()
-                            .load(Connection.BASEURL+"/api/user/getDownloadProfile/"+postJob.getUser_id())
+                            .load(Connection.BASEURL+"/api/user/getDownloadProfile/"+postJob.getUser_id()+"/"+postJob.getProfile())
                             .into(binding.imgPro);
                     binding.dateAgo.setText(DateUtils.covertTimeToText(postJob.getUpdated_at()));
                 }

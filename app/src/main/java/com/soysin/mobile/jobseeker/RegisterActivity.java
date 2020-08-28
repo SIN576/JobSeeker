@@ -3,6 +3,7 @@ package com.soysin.mobile.jobseeker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,9 @@ import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Login;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
+import java.util.Calendar;
+import java.util.List;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -45,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
     ActivityRegisterBinding binding;
     AwesomeValidation awesomeValidation;
     EditText ed_r_email,ed_r_password,ed_r_conform_password;
+    private DatePickerDialog.OnDateSetListener onDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -77,7 +77,7 @@ public class DateUtils {
         String suffix = "Ago";
 
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
             Date pasTime = dateFormat.parse(dataDate);
 
             Date nowTime = new Date();
