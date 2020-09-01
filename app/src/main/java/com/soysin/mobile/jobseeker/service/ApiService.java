@@ -4,8 +4,11 @@ package com.soysin.mobile.jobseeker.service;
 import androidx.room.Delete;
 
 import com.soysin.mobile.jobseeker.model.Cv;
+import com.soysin.mobile.jobseeker.model.FilterData;
 import com.soysin.mobile.jobseeker.model.Login;
+import com.soysin.mobile.jobseeker.model.PostCvPagination;
 import com.soysin.mobile.jobseeker.model.PostJob;
+import com.soysin.mobile.jobseeker.model.PostJobPagination;
 import com.soysin.mobile.jobseeker.model.User;
 
 import java.util.List;
@@ -59,8 +62,13 @@ public interface ApiService {
     Call<Void> deleteJob(@Path("id") int id, @Header("Authorization") String token);
 
     //post cv
+    @GET("/api/test/postcv/title")
+    Call<List<FilterData>> getTitlePostCv();
+
     @GET("/api/postcv/read")
-    Call<List<Cv>> getPostCv(@Header("Authorization") String token);
+    Call<PostCvPagination> getPostCv(@Header("Authorization") String token,
+                                     @Query("title") String title,
+                                     @Query("page") Integer page);
 
     @GET("/api/postcv/user/{id}")
     Call<List<Cv>> getPostCvUser(@Path("id") int id, @Header("Authorization") String token);
@@ -79,8 +87,15 @@ public interface ApiService {
 
 
     //post job
+
+    @GET("/api/test/title")
+    Call<List<FilterData>> getTitle();
     @GET("/api/postjob/read")
-    Call<List<PostJob>> getPostJob(@Header("Authorization") String token, @Query("keyword") String keyword);
+    Call<PostJobPagination> getPostJob(@Header("Authorization") String token,
+                                       @Query("term") String term,
+                                       @Query("location") String location,
+                                       @Query("title") String title,
+                                       @Query("page") Integer page);
 
     @GET("/api/postjob/user/{id}")
     Call<List<PostJob>> getPostJobUser(@Path("id") int id, @Header("Authorization") String token);
@@ -93,6 +108,12 @@ public interface ApiService {
 
     @POST("/api/test/postjob/byTerm")
     Call<List<PostJob>> getJobByTerm(@Body RequestBody requestBody, @Header("Authorization") String token);
+
+    @POST("/api/postjob/update/{id}")
+    Call<ResponseBody> updateJobNotFile(@Path("id") int id, @Header("Authorization") String token, @Body RequestBody responseBody);
+
+    @POST("/api/postjob/update/{id}")
+    Call<ResponseBody> updateJobFile(@Path("id") int id, @Header("Authorization") String token, @Body RequestBody responseBody);
 
 
     //@Multipart

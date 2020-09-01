@@ -51,10 +51,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if ((validateUsername() && validatePassword())) {
+                if (Validate.empty(ed_username, "please input username") && Validate.empty(ed_password, "please input password")) {
                     login();
                 }
-
             }
         });
         binding.loginRegister.setOnClickListener(new View.OnClickListener() {
@@ -66,30 +65,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validateUsername() {
-        email = ed_username.getEditText().getText().toString().trim();
-        if (email.isEmpty()) {
-            ed_username.setError("please input username");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean validatePassword() {
-        password = ed_password.getEditText().getText().toString().trim();
-        if (password.isEmpty()) {
-            ed_password.setError("please input password");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     private void login() {
         Retrofit retrofit = Connection.getClient();
         apiService = retrofit.create(ApiService.class);
-
+        email = ed_username.getEditText().getText().toString().trim();
+        password = ed_password.getEditText().getText().toString().trim();
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("email", email);
         stringMap.put("password", password);
@@ -107,9 +87,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (login != null && login.getSuccess() == 1) {
                     MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
                     MyDAO myDAO = myAppDatabase.getMyDao();
-                    myDAO.createAccount(new Account(0,login.getUser().getApi_token(),login.getUser().getId(),login.getUser().getRole(),login.getUser().getProfile()));
-                    Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
+                    myDAO.createAccount(new Account(0, login.getUser().getApi_token(), login.getUser().getId(), login.getUser().getRole(), login.getUser().getProfile()));
+                    Intent intent = new Intent(getApplicationContext(), NewJobActivity.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "error: don't have account ", Toast.LENGTH_LONG);
                 }

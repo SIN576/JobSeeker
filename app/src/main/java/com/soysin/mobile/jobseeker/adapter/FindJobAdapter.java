@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.findJob.PostJobActivity;
+import com.soysin.mobile.jobseeker.model.Cv;
 import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.util.DateUtils;
 import com.soysin.mobile.jobseeker.viewCV.DeleteCV;
@@ -33,6 +34,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
     List<PostJob> findJobModels;
     private String token;
 
+
     public FindJobAdapter(Context context, List<PostJob> findJobModels, String token) {
         this.context = context;
         this.findJobModels = findJobModels;
@@ -45,7 +47,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
 
 
     public interface OnClickItemListener {
-        public void onItemClick(int position);
+        public void onItemClick(PostJob postJob);
 
     }
 
@@ -77,7 +79,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
         Picasso.get().load(Connection.BASEURL+"/api/user/getDownloadProfile/"+findJobModels.get(position).getUser_id()+"/"+findJobModels.get(position).getProfile())
                 .into(holder.imageView);
         Picasso.get()
-                .load(Connection.BASEURL+"/api/postjob/getdownload/"+findJobModels.get(position).getId())
+                .load(Connection.BASEURL+"/api/postjob/getdownload/"+findJobModels.get(position).getId()+"/"+findJobModels.get(position).getImage())
                 .into(holder.imgPostJob);
         holder.tv_company_name.setText(findJobModels.get(position).getCompany_name());
         holder.tv_term.setText(findJobModels.get(position).getTerm());
@@ -111,7 +113,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
+                            mListener.onItemClick(findJobModels.get(position));
                         }
                     }
                 }
@@ -167,6 +169,13 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
 
     public void filterList(List<PostJob> postJobList) {
         this.findJobModels = postJobList;
+        notifyDataSetChanged();
+    }
+
+    public void addList(List<PostJob> postJobs){
+        for (PostJob postJob: postJobs){
+            findJobModels.add(postJob);
+        }
         notifyDataSetChanged();
     }
 }

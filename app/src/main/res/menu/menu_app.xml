@@ -42,9 +42,9 @@
     <item android:title="setting">
         <menu>
             <item
-                android:icon="@drawable/ic_baseline_account_box_24"
-                android:id="@+id/account_id"
-                android:title="Account" />
+                android:icon="@drawable/ic_baseline_language_24"
+                android:id="@+id/language"
+                android:title="change language" />
             <item
                 android:icon="@drawable/logout"
                 android:id="@+id/log_out_id"

@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -89,38 +89,40 @@
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <Spinner
-                    android:id="@+id/spinnerPostJob"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="50dp"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/term"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/term">
+
+                    <AutoCompleteTextView
+                        android:inputType="none"
+                        android:id="@+id/filled_exposed_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/post_job_ed_title"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edTitle"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:hint="title"
                         android:padding="5dp" />
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_requirement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edExperience"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -130,10 +132,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/post_job_ed_last_date"
+                app:endIconMode="custom"
+                app:endIconContentDescription="pickDate"
+                app:endIconDrawable="@drawable/ic_calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edLastDate"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -146,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edEmail"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -154,17 +159,18 @@
                     android:padding="5dp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/post_job_ed_address"
+                android:id="@+id/location"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="@string/location">
 
-                <EditText
-                    android:id="@+id/edAddress"
+                <AutoCompleteTextView
+                    android:inputType="none"
+                    android:id="@+id/aTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:hint="address"
-                    android:padding="5dp" />
+                    android:layout_height="wrap_content"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -173,7 +179,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="number"
                     android:id="@+id/edNumberPhone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

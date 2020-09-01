@@ -103,6 +103,65 @@ public class PostJob {
         return requirement;
     }
 
+    public PostJob() {
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setLast_date(String last_date) {
+        this.last_date = last_date;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTerm() {
         return term;
     }

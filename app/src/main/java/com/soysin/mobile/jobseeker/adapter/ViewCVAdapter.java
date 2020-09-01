@@ -33,6 +33,13 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
     ViewCVAdapter.OnClickItemListener mListener;
     ViewCVAdapter.OnLongClickItemListener longListener;
 
+    public void addList(List<Cv> data) {
+        for (Cv cv: data){
+            findJobModels.add(cv);
+        }
+        notifyDataSetChanged();
+    }
+
     public interface OnClickItemListener {
         public void onItemClick(int position);
 
@@ -45,10 +52,6 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
     public interface OnLongClickItemListener {
         public void onItemLongClick(int position);
 
-    }
-
-    public void setOnLongClickItemListener(ViewCVAdapter.OnLongClickItemListener longListener) {
-        this.longListener = longListener;
     }
 
 
@@ -66,6 +69,7 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
     @NonNull
     @Override
     public ViewCVHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_cv,parent,false);
         return new ViewCVHolder(view);
     }
@@ -88,6 +92,7 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
     @Override
     public int getItemCount() {
         return findJobModels.size();
+
     }
 
     public class ViewCVHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {

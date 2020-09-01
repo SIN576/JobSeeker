@@ -16,10 +16,12 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 
 import com.soysin.mobile.jobseeker.ProfileActivity;
+import com.soysin.mobile.jobseeker.Validate;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostCvBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
+import com.soysin.mobile.jobseeker.findJob.PostJobActivity;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Cv;
 import com.soysin.mobile.jobseeker.model.User;
@@ -83,7 +85,14 @@ public class PostCvActivity extends AppCompatActivity {
                 binding.btnPostCv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        update();
+                        if ( Validate.empty(binding.postJobEdTitle,"please input title") &&
+                                Validate.empty(binding.postJobEdExperience,"please input experience") &&
+                                Validate.empty(binding.postJobEdEmail,"please input email") &&
+                                Validate.empty(binding.postJobEdPhoneNumber,"please input phone number"))
+                        {
+                            update();
+                            finish();
+                        }
                     }
                 });
             }
@@ -91,7 +100,14 @@ public class PostCvActivity extends AppCompatActivity {
                 binding.btnPostCv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        postCv(file);
+                        if (Validate.checkFile(file, PostCvActivity.this) &&
+                        Validate.empty(binding.postJobEdTitle,"please input title") &&
+                        Validate.empty(binding.postJobEdExperience,"please input experience") &&
+                        Validate.empty(binding.postJobEdEmail,"please input email") &&
+                        Validate.empty(binding.postJobEdPhoneNumber,"please input phone number")){
+                            postCv(file);
+                            finish();
+                        }
 
                     }
                 });

@@ -25,7 +25,9 @@
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".findJob.JobDescriptionActivity" />
         <activity android:name=".findJob.SearchJobActivity" />
-        <activity android:name=".NewJobActivity" />
+        <activity
+            android:name=".NewJobActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".AppBarActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />

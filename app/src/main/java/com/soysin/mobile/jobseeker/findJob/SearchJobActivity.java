@@ -14,6 +14,7 @@ import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivitySearchJobBinding;
 import com.soysin.mobile.jobseeker.model.PostJob;
+import com.soysin.mobile.jobseeker.model.PostJobPagination;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
 import java.util.ArrayList;
@@ -84,33 +85,34 @@ public class SearchJobActivity extends AppCompatActivity implements FindJobAdapt
     private void getPostJob(){
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer "+token,null);
-        listCall.enqueue(new Callback<List<PostJob>>() {
+        Call<PostJobPagination> listCall = apiService.getPostJob("Bearer "+token,null,null,null,1);
+        listCall.enqueue(new Callback<PostJobPagination>() {
             @Override
-            public void onResponse(Call<List<PostJob>> call, Response<List<PostJob>> response) {
-                if (!response.isSuccessful()){
-                    Log.e("error",response.message());
+            public void onResponse(Call<PostJobPagination> call, Response<PostJobPagination> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("error", response.message());
                 }
-               postJobs = response.body();
-                if (postJobs != null){
-                    binding.recyclerViewSearchJob.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    findJobAdapter = new FindJobAdapter(getApplicationContext(),postJobs);
-                    binding.recyclerViewSearchJob.setAdapter(findJobAdapter);
-                    findJobAdapter.setOnClickItemListener(SearchJobActivity.this);
-                }
+//                Log.e("PostJob",postJobs.get(1).getCompany_name().toString());
+//                if (response.isSuccessful() && response.body() != null) {
+//                    postJobs = response.body().get(0).getData();
+//                    binding.recyclerViewSearchJob.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//                    findJobAdapter = new FindJobAdapter(getApplicationContext(),postJobs);
+//                    binding.recyclerViewSearchJob.setAdapter(findJobAdapter);
+//                    findJobAdapter.setOnClickItemListener(SearchJobActivity.this);
+//                }
             }
 
             @Override
-            public void onFailure(Call<List<PostJob>> call, Throwable t) {
-                Log.e("error",t.getMessage());
+            public void onFailure(Call<PostJobPagination> call, Throwable t) {
+                Log.e("error", t.getMessage());
             }
         });
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(PostJob postJob) {
         Intent intent = new Intent(this, JobDescriptionActivity.class);
-        intent.putExtra("id",postJobs.get(position).getId());
+        intent.putExtra("id",postJob.getId());
         intent.putExtra("token",token);
         startActivity(intent);
     }

@@ -344,8 +344,9 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(PostJob postJob) {
         Intent intent = new Intent(getApplicationContext(), JobDescriptionActivity.class);
+        intent.putExtra("id",postJob.getId());
         intent.putExtra("token", account.getToken());
         startActivity(intent);
     }

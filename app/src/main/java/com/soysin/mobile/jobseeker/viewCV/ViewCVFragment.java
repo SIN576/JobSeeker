@@ -3,6 +3,7 @@ package com.soysin.mobile.jobseeker.viewCV;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.soysin.mobile.jobseeker.ProfileActivity;
@@ -19,18 +21,24 @@ import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.TypeOfCvActivity;
 import com.soysin.mobile.jobseeker.TypeOfJobDetailActivity;
 import com.soysin.mobile.jobseeker.ViewCVDetailActivity;
+import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
 import com.soysin.mobile.jobseeker.adapter.TypeOfJobAdapter;
 import com.soysin.mobile.jobseeker.adapter.ViewCVAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
+import com.soysin.mobile.jobseeker.databinding.FragmentViewCV2Binding;
+import com.soysin.mobile.jobseeker.findJob.FindJobFragment;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Cv;
+import com.soysin.mobile.jobseeker.model.FilterData;
 import com.soysin.mobile.jobseeker.model.FindJobModel;
+import com.soysin.mobile.jobseeker.model.PostCvPagination;
 import com.soysin.mobile.jobseeker.model.TypeOfJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.logging.LoggingEventListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,11 +50,14 @@ import retrofit2.Retrofit;
  */
 public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickItemListener, TypeOfJobAdapter.OnClickItemListener {
 
-    private RecyclerView recyclerView,recyclerView1;
+    private RecyclerView recyclerView1;
     private View root;
     private ViewCVAdapter adapter;
     Account account;
     List<Cv> cvList;
+    FragmentViewCV2Binding binding;
+    private int page = 1, limit;
+    private String title = null;
 
 
     public ViewCVFragment(Account account) {
@@ -59,53 +70,109 @@ public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickIte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_view_c_v2, container, false);
-        List<TypeOfJob> typeOfJobs = new ArrayList<>();
-
-        typeOfJobs.add(new TypeOfJob("https://psmarketingimages.s3.amazonaws.com/blog/wp-content/uploads/2018/03/30115641/picture-id831121290.jpg",
-                "Accounting"));
-        typeOfJobs.add(new TypeOfJob("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSCaxQ_qNy_V3CHrK9U5-fe5VHAcUUEgTmVCA&usqp=CAU",
-                "Digital Marketing"));
-        typeOfJobs.add(new TypeOfJob("https://s3-us-west-2.amazonaws.com/robogarden-new/Articles/upload/blogs/lg-lean-to-code-to-be-a-mobile-developer.jpg",
-                "Mobile Developer"));
-        typeOfJobs.add(new TypeOfJob("https://www.jenyalestina.com/blog/wp-content/uploads/2019/05/web-development.jpg",
-                "Web Developer"));
-        recyclerView = root.findViewById(R.id.recycler_view_view_cv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        TypeOfJobAdapter typeOfJobAdapter = new TypeOfJobAdapter(typeOfJobs,getActivity());
-        recyclerView.setAdapter(typeOfJobAdapter);
-
-        typeOfJobAdapter.setOnClickItemListener(this);
+        binding = FragmentViewCV2Binding.inflate(inflater,container,false);
+        root = binding.getRoot();
+        binding.progressBar.setVisibility(View.VISIBLE);
         recyclerView1 = root.findViewById(R.id.recycler_view_view_cv_vertical);
+
+        getTitle();
         getPostCv();
+        binding.nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
+                    page++;
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                    if (page <= limit){
+                        getPostCv();
+                    }else {
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
+
+                }
+            }
+        });
+
+        binding.btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                page = 1;
+                title = binding.searchJob.getText().toString().trim();
+                getPostCv();
+            }
+        });
         return root;
+    }
+    private void getTitle(){
+        ApiService  apiService= Connection.getClient().create(ApiService.class);
+        Call<List<FilterData>> listCall = apiService.getTitlePostCv();
+
+        listCall.enqueue(new Callback<List<FilterData>>() {
+            @Override
+            public void onResponse(Call<List<FilterData>> call, Response<List<FilterData>> response) {
+                if (response.isSuccessful() && response.body()!=null){
+                    List<FilterData> filterData = response.body();
+                    List<String> titles = new ArrayList<>();
+
+                    for (int i=0;i<filterData.size();i++){
+                        titles.add(filterData.get(i).getTitle());
+                    }
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_list_item_1,titles);
+                    binding.searchJob.setAdapter(arrayAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FilterData>> call, Throwable t) {
+
+            }
+        });
     }
     private void getPostCv(){
         Retrofit retrofit = Connection.getClient();
         final ApiService apiService = retrofit.create(ApiService.class);
 
-        Call<List<Cv>> call = apiService.getPostCv("Bearer "+account.getToken());
+        Call<PostCvPagination> call = apiService.getPostCv("Bearer "+account.getToken(),title,page);
 
-        call.enqueue(new Callback<List<Cv>>() {
+        call.enqueue(new Callback<PostCvPagination>() {
             @Override
-            public void onResponse(Call<List<Cv>> call, Response<List<Cv>> response) {
+            public void onResponse(Call<PostCvPagination> call, Response<PostCvPagination> response) {
                 if (!response.isSuccessful()){
                     Toast.makeText(getContext(),"error:"+response.message(),Toast.LENGTH_LONG).show();
                 }
-                cvList = response.body();
-                if (cvList != null){
-                    Log.e("success","success");
-                    recyclerView1.setLayoutManager(new GridLayoutManager(getActivity(),1));
-                    adapter = new ViewCVAdapter(getActivity(),cvList);
-                    recyclerView1.setAdapter(adapter);
-                    adapter.setOnClickItemListener(ViewCVFragment.this);
-                }else {
-                    Log.e("success","fail");
+                if(response.body().getData().isEmpty()){
+
+                    binding.tvNoData.setVisibility(View.VISIBLE);
+                    binding.recyclerViewViewCvVertical.setVisibility(View.GONE);
+                }
+                limit = response.body().getLast_page();
+                try {
+                    cvList = response.body().getData();
+//                        postJobs.addAll(response.body().getData());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (!cvList.isEmpty()){
+                    binding.tvNoData.setVisibility(View.GONE);
+                    binding.recyclerViewViewCvVertical.setVisibility(View.VISIBLE);
+                    if (page == 1){
+                        Log.e("pdf",cvList.get(0).getPdf());
+                        binding.progressBar.setVisibility(View.GONE);
+                        recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        adapter = new ViewCVAdapter(getActivity(), cvList);
+                        recyclerView1.setAdapter(adapter);
+                        adapter.setOnClickItemListener(ViewCVFragment.this);
+                    }else {
+                        adapter.addList(response.body().getData());
+                    }
+
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Cv>> call, Throwable t) {
+            public void onFailure(Call<PostCvPagination> call, Throwable t) {
                 Log.e("fail",t.getMessage());
             }
         });

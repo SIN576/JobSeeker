@@ -34,6 +34,10 @@
     <string name="todo">TODO</string>
     <string name="content_description_media">description</string>
     <string name="label">Comapany_name</string>
+    <string name="hint_text">Day</string>
+    <string name="content_description_end_icon">calendar</string>
+    <string name="term">Term</string>
+    <string name="location">location</string>
 
     <string-array name="typeOfJob">
         <item>All</item>

@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -16,15 +17,20 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.soysin.mobile.jobseeker.NewJobActivity;
+import com.soysin.mobile.jobseeker.Project;
 import com.soysin.mobile.jobseeker.R;
+import com.soysin.mobile.jobseeker.Validate;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostJobBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.model.Account;
+import com.soysin.mobile.jobseeker.model.Data;
 import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 import com.soysin.mobile.jobseeker.util.FileUtils;
@@ -33,6 +39,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -53,6 +60,7 @@ public class PostJobActivity extends AppCompatActivity implements AdapterView.On
     Bundle bundle;
     PostJob postJob;
     private String term="Full time";
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,35 +76,63 @@ public class PostJobActivity extends AppCompatActivity implements AdapterView.On
                 finish();
             }
         });
-        if(ContextCompat.checkSelfPermission(PostJobActivity.this,
+        if (ContextCompat.checkSelfPermission(PostJobActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(PostJobActivity.this,
-                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST);
         }
         MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
         MyDAO myDAO = myAppDatabase.getMyDao();
         account = myDAO.getAccount(0);
 
+        View view = getWindow().getDecorView().findViewById(android.R.id.content);
+//
+//        String[] COUNTRIES = new String[] {"Full time", "Last time", "Internship", "Other"};
 
-        if (getIntent().getExtras()!=null){
+        if (getIntent().getExtras() != null) {
+
+            Project.dropDrown(PostJobActivity.this,binding.filledExposedDropdown,Data.TERM);
+            Project.dropDrown(PostJobActivity.this,binding.aTextView, Data.COUNTRIES);
             bundle = getIntent().getBundleExtra("bundle_key");
             String action = bundle.getString("action");
-            if (action.equals("edit")){
+            if (action.equals("edit")) {
                 edit();
+                Project.dropDrown(PostJobActivity.this,binding.filledExposedDropdown,Data.TERM);
+                Project.dropDrown(PostJobActivity.this,binding.aTextView,Data.COUNTRIES);
                 binding.btnPost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        update();
+                        if (Validate.empty(binding.postJobEdNameCompany,"please input company name") &&
+                                Validate.empty(binding.term,"please choose term")&&
+                                Validate.empty(binding.postJobEdTitle,"please input title")&&
+                                Validate.empty(binding.postJobEdRequirement,"please input requirement")&&
+                                Validate.empty(binding.postJobEdLastDate,"please pick last date")&&
+                                Validate.empty(binding.postJobEdEmail,"please input email") &&
+                                Validate.empty(binding.location,"please choose location")&&
+                                Validate.empty(binding.postJobEdPhoneNumber,"please input phone number")){
+                            update();
+
+                        }
                     }
                 });
-            }
-            else {
+            } else {
                 binding.btnPost.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        postJob(file);
+                        if (Validate.checkFile(file,PostJobActivity.this)&&
+                        Validate.empty(binding.postJobEdNameCompany,"please input company name") &&
+                        Validate.empty(binding.term,"please choose term")&&
+                        Validate.empty(binding.postJobEdTitle,"please input title")&&
+                        Validate.empty(binding.postJobEdRequirement,"please input requirement")&&
+                        Validate.empty(binding.postJobEdLastDate,"please pick last date")&&
+                        Validate.empty(binding.postJobEdEmail,"please input email") &&
+                        Validate.empty(binding.location,"please choose location")&&
+                        Validate.empty(binding.postJobEdPhoneNumber,"please input phone number")){
+                            postJob(file);
+
+                        }
                     }
                 });
             }
@@ -117,44 +153,85 @@ public class PostJobActivity extends AppCompatActivity implements AdapterView.On
             }
         });
 
+        binding.postJobEdLastDate.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Project.pickDate(PostJobActivity.this, binding.edLastDate,datePickerDialog);
+            }
+        });
 
-        if(term.equals("Full time")){
-            spinner();
-        }else if(term.equals("Part time")){
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                    R.array.typeOfJobPost1, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-            binding.spinnerPostJob.setAdapter(adapter);
-            binding.spinnerPostJob.setOnItemSelectedListener(this);
-
-        }else {
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                    R.array.typeOfJobPost2, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-            binding.spinnerPostJob.setAdapter(adapter);
-            binding.spinnerPostJob.setOnItemSelectedListener(this);
-        }
-    }
-    private void spinner(){
-// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.typeOfJobPost, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        binding.spinnerPostJob.setAdapter(adapter);
-        binding.spinnerPostJob.setOnItemSelectedListener(this);
     }
     private void update(){
+
+        ApiService apiService = Connection.getClient().create(ApiService.class);
+
+
         if(file != null){
-            RequestBody requestBody = GetRequestBody.getRequestBody(file, (int) account.getAccountId(),term);
+            String et=file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")+1);
+            String mimeType= MimeTypeMap.getSingleton().getMimeTypeFromExtension(et);
+            final RequestBody requestFile = RequestBody.create(file, MediaType.get(mimeType));
+            final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+            MultipartBody.Part fileImage = MultipartBody.Part.createFormData("photo",file.getName(),requestFile);
+            requestBodyBuilder.addPart(fileImage);
+            requestBodyBuilder.addFormDataPart("user_id",postJob.getUser_id()+"");
+            requestBodyBuilder.addFormDataPart("company_name",binding.postJobEdNameCompany.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("term",binding.term.getEditText().getText().toString().trim());
+            requestBodyBuilder.addFormDataPart("title",binding.postJobEdTitle.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("requirement",binding.postJobEdRequirement.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("email",binding.postJobEdEmail.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("address",binding.location.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("phone_number",binding.postJobEdPhoneNumber.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("last_date",binding.postJobEdLastDate.getEditText().getText().toString());
+            RequestBody requestBody1=requestBodyBuilder.build();
+            //final RequestBody requestBody = GetRequestBody.getRequestBody(file, (int) account.getAccountId(),PostJobActivity.this);
+            Call<ResponseBody> call = apiService.updateJobFile(postJob.getId(),"Bearer "+account.getToken(),
+                    requestBody1);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (!response.isSuccessful()){
+                        Toast.makeText(getApplicationContext(),"not success",Toast.LENGTH_LONG);
+                    }else{
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("fail",t.getMessage());
+                }
+            });
         }
         else {
-            Toast.makeText(getApplicationContext(),"not file",Toast.LENGTH_LONG).show();
+            final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+            requestBodyBuilder.addFormDataPart("user_id",postJob.getUser_id()+"");
+            requestBodyBuilder.addFormDataPart("company_name",binding.postJobEdNameCompany.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("term",binding.term.getEditText().getText().toString().trim());
+            requestBodyBuilder.addFormDataPart("title",binding.postJobEdTitle.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("requirement",binding.postJobEdRequirement.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("email",binding.postJobEdEmail.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("address",binding.location.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("phone_number",binding.postJobEdPhoneNumber.getEditText().getText().toString());
+            requestBodyBuilder.addFormDataPart("last_date",binding.postJobEdLastDate.getEditText().getText().toString());
+            RequestBody requestBody1=requestBodyBuilder.build();
+
+            Call<ResponseBody> call = apiService.updateJobNotFile(postJob.getId(),"Bearer "+account.getToken(),
+                    requestBody1);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (!response.isSuccessful()){
+                        Toast.makeText(getApplicationContext(),"not success",Toast.LENGTH_LONG);
+                    }else{
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("fail",t.getMessage());
+                }
+            });
         }
     }
 
@@ -173,14 +250,15 @@ public class PostJobActivity extends AppCompatActivity implements AdapterView.On
 
         term = postJob.getTerm();
         binding.edCompanyName.setText(postJob.getCompany_name());
+        binding.filledExposedDropdown.setText(term);
         binding.edTitle.setText(postJob.getTitle());
         binding.edExperience.setText(bundle.getString("requirement"));
         binding.edLastDate.setText(postJob.getLast_date());
-        binding.edAddress.setText(postJob.getAddress());
+        binding.aTextView.setText(postJob.getAddress());
         binding.edEmail.setText(bundle.getString("email"));
         binding.edNumberPhone.setText(bundle.getString("phone_number"));
         Picasso.get()
-                .load(Connection.BASEURL+"/api/postjob/getdownload/"+postJob.getId())
+                .load(Connection.BASEURL+"/api/postjob/getdownload/"+postJob.getId()+"/"+postJob.getImage())
                 .into(binding.postJobImage);
     }
     @Override
@@ -230,7 +308,7 @@ public class PostJobActivity extends AppCompatActivity implements AdapterView.On
         requestBodyBuilder.addFormDataPart("last_date",binding.postJobEdLastDate.getEditText().getText().toString());
         Log.e("late_date",binding.postJobEdLastDate.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("title",binding.postJobEdTitle.getEditText().getText().toString());
-        requestBodyBuilder.addFormDataPart("address",binding.postJobEdAddress.getEditText().getText().toString());
+        requestBodyBuilder.addFormDataPart("address",binding.location.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("phone_number",binding.postJobEdPhoneNumber.getEditText().getText().toString());
         requestBodyBuilder.addFormDataPart("requirement",binding.postJobEdRequirement.getEditText().getText().toString());
 

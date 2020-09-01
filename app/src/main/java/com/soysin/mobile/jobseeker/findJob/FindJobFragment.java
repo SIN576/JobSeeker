@@ -1,9 +1,11 @@
 package com.soysin.mobile.jobseeker.findJob;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.TypeOfJobDetailActivity;
 import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
@@ -30,11 +37,15 @@ import com.soysin.mobile.jobseeker.databinding.FragmentFindJob2Binding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.model.Account;
+import com.soysin.mobile.jobseeker.model.Data;
+import com.soysin.mobile.jobseeker.model.FilterData;
 import com.soysin.mobile.jobseeker.model.PostJob;
+import com.soysin.mobile.jobseeker.model.PostJobPagination;
 import com.soysin.mobile.jobseeker.model.TypeOfJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,11 +62,13 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
 
 
     FindJobAdapter adapter;
-    List<PostJob> postJobs;
+    List<PostJob> postJobs,postJobs1,postJobs2;
     RecyclerView recyclerView_vertical;
     View root;
     Account account;
-    private String token,text=null;
+    private String token,text=null,province = null,title=null;
+    private int page = 1, limit, itemChecked= 0, number;
+
 
 
     FragmentFindJob2Binding binding;
@@ -91,99 +104,179 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
         binding = FragmentFindJob2Binding.inflate(inflater, container, false);
 //        recyclerView = root.findViewById(R.id.recycler_view_find_job);
         root = binding.getRoot();
+        binding.progressBar.setVisibility(View.VISIBLE);
         recyclerView_vertical = root.findViewById(R.id.recycler_view_find_job_vertical);
-
-        TextView editText = root.findViewById(R.id.search_job);
 
         ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.typeOfJob, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinner.setAdapter(arrayAdapter);
         binding.spinner.setOnItemSelectedListener(this);
-        editText.setOnClickListener(new View.OnClickListener() {
+
+
+
+//        binding.searchJob.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                //filter(s.toString());
+//                title = s.toString();
+//                getPostJob(text);
+//            }
+//        });
+
+        getTitle();
+
+        binding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchJobActivity.class);
-                intent.putExtra("token", account.getToken());
-                startActivity(intent);
+                title = binding.searchJob.getText().toString().trim();
+                page = 1;
+                getPostJob(text);
             }
         });
-        List<TypeOfJob> typeOfJobs = new ArrayList<>();
-        typeOfJobs.add(new TypeOfJob("https://psmarketingimages.s3.amazonaws.com/blog/wp-content/uploads/2018/03/30115641/picture-id831121290.jpg",
-                "Accounting"));
-        typeOfJobs.add(new TypeOfJob("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSCaxQ_qNy_V3CHrK9U5-fe5VHAcUUEgTmVCA&usqp=CAU",
-                "Digital Marketing"));
-        typeOfJobs.add(new TypeOfJob("https://s3-us-west-2.amazonaws.com/robogarden-new/Articles/upload/blogs/lg-lean-to-code-to-be-a-mobile-developer.jpg",
-                "Mobile Developer"));
-        typeOfJobs.add(new TypeOfJob("https://www.jenyalestina.com/blog/wp-content/uploads/2019/05/web-development.jpg",
-                "Web Developer"));
-
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-//        typeOfJobAdapter = new TypeOfJobAdapter(typeOfJobs, getActivity());
-//        recyclerView.setAdapter(typeOfJobAdapter);
-//        typeOfJobAdapter.setOnClickItemListener(this);
-
-        getPostJob(text);
-        binding.searchJob.addTextChangedListener(new TextWatcher() {
+        binding.nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
+                    page++;
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                    if (page <= limit){
+                        getPostJob(text);
+                    }else {
+                        binding.progressBar.setVisibility(View.GONE);
+                    }
 
+                }
             }
+        });
 
+        binding.btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                filter(s.toString());
+            public void onClick(View v) {
+                itemChecked = number;
+                getLocation();
             }
         });
         return root;
     }
+    private void getTitle(){
+        ApiService  apiService= Connection.getClient().create(ApiService.class);
+        Call<List<FilterData>> listCall = apiService.getTitle();
 
-    private void filter(String text){
-        List<PostJob> postJobList = new ArrayList<>();
+        listCall.enqueue(new Callback<List<FilterData>>() {
+            @Override
+            public void onResponse(Call<List<FilterData>> call, Response<List<FilterData>> response) {
+                if (response.isSuccessful() && response.body()!=null){
+                    List<FilterData> filterData = response.body();
+                    List<String> titles = new ArrayList<>();
 
-        for (PostJob postJob: postJobs){
-            if (postJob.getTitle().toLowerCase().contains(text.toLowerCase())){
-                postJobList.add(postJob);
+                    for (int i=0;i<filterData.size();i++){
+                        titles.add(filterData.get(i).getTitle());
+                    }
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_list_item_1,titles);
+                    binding.searchJob.setAdapter(arrayAdapter);
+                }
             }
-        }
-        adapter.filterList(postJobList);
+
+            @Override
+            public void onFailure(Call<List<FilterData>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getLocation(){
+        final String[] items = Data.COUNTRIES;
+        new MaterialAlertDialogBuilder(getActivity())
+                .setTitle("Dialog")
+                .setSingleChoiceItems(items, itemChecked, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        province = items[which];
+                        number = which;
+                    }
+                })
+                .setPositiveButton("Ok", /* listener = */ new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        binding.filterTitle.setText(province);
+                        page = 1;
+                        getPostJob(text);
+                    }
+                })
+                .setNegativeButton("Cancel", /* listener = */ new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        province = null;
+                    }
+                })
+                .show();
     }
 
     private void getPostJob(String term) {
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
-        Call<List<PostJob>> listCall = apiService.getPostJob("Bearer " + account.getToken(),term);
-        listCall.enqueue(new Callback<List<PostJob>>() {
+        Call<PostJobPagination> listCall = apiService.getPostJob("Bearer " + account.getToken(),term,province,title,page);
+        listCall.enqueue(new Callback<PostJobPagination>() {
             @Override
-            public void onResponse(Call<List<PostJob>> call, Response<List<PostJob>> response) {
+            public void onResponse(Call<PostJobPagination> call, Response<PostJobPagination> response) {
                 if (!response.isSuccessful()) {
-                    Log.e("error", response.message());
+                    Log.e("eerror", response.message());
                 }
-                postJobs = response.body();
-//                Log.e("PostJob",postJobs.get(1).getCompany_name().toString());
-                if (postJobs != null) {
-                    recyclerView_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    adapter = new FindJobAdapter(getActivity(), postJobs);
-                    recyclerView_vertical.setAdapter(adapter);
-                    adapter.setOnClickItemListener(FindJobFragment.this);
+                if(response.body().getData().isEmpty()){
+                    
+                    binding.tvNoData.setVisibility(View.VISIBLE);
+                    binding.recyclerViewFindJobVertical.setVisibility(View.GONE);
+                }
+                limit = response.body().getLast_page();
+                if (response.isSuccessful() && response.body() != null && page <= limit) {
+                    try {
+                        postJobs = response.body().getData();
+//                        postJobs.addAll(response.body().getData());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    if (!postJobs.isEmpty()){
+                        binding.tvNoData.setVisibility(View.GONE);
+                        binding.recyclerViewFindJobVertical.setVisibility(View.VISIBLE);
+                        if (page == 1){
+                            binding.progressBar.setVisibility(View.GONE);
+                            recyclerView_vertical.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            adapter = new FindJobAdapter(getActivity(), response.body().getData());
+                            recyclerView_vertical.setAdapter(adapter);
+                            adapter.setOnClickItemListener(FindJobFragment.this);
+                        }else {
+                            adapter.addList(response.body().getData());
+                        }
+
+                    }
+
+
                 }
             }
 
             @Override
-            public void onFailure(Call<List<PostJob>> call, Throwable t) {
+            public void onFailure(Call<PostJobPagination> call, Throwable t) {
                 Log.e("error", t.getMessage());
             }
         });
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(PostJob postJob) {
         Intent intent = new Intent(getActivity(), JobDescriptionActivity.class);
-        intent.putExtra("id", postJobs.get(position).getId());
+        intent.putExtra("id", postJob.getId());
         intent.putExtra("token", account.getToken());
         startActivity(intent);
     }
@@ -201,9 +294,11 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
          text = parent.getItemAtPosition(position).toString();
         if (text.equals("All")){
             text = null;
+            page = 1;
             getPostJob(text);
         }else {
             Log.e("term",text);
+            page = 1;
             getPostJob(text);
         }
     }

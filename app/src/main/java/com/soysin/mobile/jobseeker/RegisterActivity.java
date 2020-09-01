@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextView btn_login;
     RadioGroup radioGroup;
+    private DatePickerDialog picker;
 
     Button btn_register;
 
@@ -64,18 +66,18 @@ public class RegisterActivity extends AppCompatActivity {
         ed_r_conform_password = findViewById(R.id.ed_conform_password_register);
         btn_register = findViewById(R.id.btn_register_register);
 
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-
-//        String regexPassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
-//        awesomeValidation.addValidation(this,R.id.ed_last_name_register, RegexTemplate.NOT_EMPTY,R.string.invalid_username);
-//        awesomeValidation.addValidation(this,R.id.ed_email_register, Patterns.EMAIL_ADDRESS,R.string.invalid_email);
-//        awesomeValidation.addValidation(this,R.id.ed_password_register,regexPassword,R.string.invalid_password);
-//        awesomeValidation.addValidation(this,R.id.ed_conform_password_register,R.id.ed_password_register,R.string.conform_password);
-
-        btn_register.setOnClickListener(new View.OnClickListener() {
+          btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (awesomeValidation.validate()){
+                if (Validate.empty(binding.firstName,"please input first name") &&
+                    Validate.empty(binding.lastName,"please input last name") &&
+                    Validate.empty(binding.DOB,"please pick date of birth") &&
+                    validateCompanyName() &&
+                    Validate.empty(binding.PhoneNumber,"please input phone number") &&
+                    Validate.empty(binding.Email,"please input email") &&
+                    Validate.password(binding.password,"please input password") &&
+                    Validate.passwordConform(binding.passwordConform,binding.edPasswordRegister.getText().toString().trim()
+                            ,"please input password conform")){
                     register();
                 }
                 else {
@@ -92,6 +94,28 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.DOB.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Project.pickDate(RegisterActivity.this,binding.edDateOfBirthRegister,picker);
+            }
+        });
+    }
+    private boolean validateCompanyName(){
+        if (role == 3){
+            return true;
+        }
+        else {
+            String companyName = binding.companyName.getEditText().getText().toString().trim();
+
+            if (companyName.isEmpty()){
+                binding.companyName.setError("place input company name");
+                return false;
+            }else {
+                binding.companyName.setError(null);
+                return true;
+            }
+        }
     }
     public void onClickRadioButtonRegister(View view){
             boolean isSelected = ((AppCompatRadioButton)view).isChecked();
@@ -118,9 +142,9 @@ public class RegisterActivity extends AppCompatActivity {
                 binding.edEmailRegister.getText().toString(),
                 binding.edPasswordRegister.getText().toString(),
                 binding.edConformPasswordRegister.getText().toString(),
-                "Trendsec Solution",
+                binding.companyName.getEditText().getText().toString().trim(),
                 "jdha",
-                "20 May 2000",role);
+                binding.edDateOfBirthRegister.getText().toString().trim(),role);
 
         call.enqueue(new Callback<Login>() {
             @Override
@@ -138,6 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 Toast.makeText(getApplicationContext(),response.message(),Toast.LENGTH_LONG).show();
             }

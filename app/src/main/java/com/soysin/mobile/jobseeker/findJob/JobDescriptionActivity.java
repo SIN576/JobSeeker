@@ -69,7 +69,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
                 postJob = response.body();
                 if (postJob != null){
                     Log.e("success",response.message());
-                    Picasso.get().load(Connection.BASEURL+"/api/postjob/getdownload/"+postJob.getId())
+                    Picasso.get().load(Connection.BASEURL+"/api/postjob/getdownload/"+postJob.getId()+"/"+postJob.getImage())
                             .into(binding.imgProJob);
                     binding.titleJob.setText(postJob.getTitle());
                     binding.nameCompany.setText(postJob.getCompany_name());
