@@ -167,7 +167,7 @@
                         android:textColor="#0000ff"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:text="About Job"
+                        android:text="@string/about_job"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -218,7 +218,7 @@
                         android:textColor="#0000ff"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:text="Company"
+                        android:text="@string/company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

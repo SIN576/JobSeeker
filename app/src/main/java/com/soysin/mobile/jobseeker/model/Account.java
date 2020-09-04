@@ -10,8 +10,15 @@ public class Account {
         return accountRole;
     }
 
+    @ColumnInfo(name = "updated_at")
+    private String updatedAt;
 
-    public Account(int id, String token, long accountId, int accountRole, String nameImageProfile) {
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Account(int id, String token, long accountId, int accountRole, String nameImageProfile,String updatedAt) {
+        this.updatedAt= updatedAt;
         this.token = token;
         this.id = id;
         this.accountId = accountId;

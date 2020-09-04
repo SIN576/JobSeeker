@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "807476102911",
+    "firebase_url": "https://push-notification-15e44.firebaseio.com",
+    "project_id": "push-notification-15e44",
+    "storage_bucket": "push-notification-15e44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807476102911:android:59e60ba95127ce0726eeca",
+        "android_client_info": {
+          "package_name": "com.soysin.mobile.jobseeker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807476102911-8gaitkpdidfgu5mbhlk5lkcvfqna1h5m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJwiggItum71zkqyBmB5AqhSnw27e8t-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807476102911-8gaitkpdidfgu5mbhlk5lkcvfqna1h5m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

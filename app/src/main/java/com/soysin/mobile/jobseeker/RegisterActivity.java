@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     register();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"faild successfully",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"fail successfully",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -90,8 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         binding.DOB.setEndIconOnClickListener(new View.OnClickListener() {
@@ -158,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                     MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
                     MyDAO myDAO = myAppDatabase.getMyDao();
 
-                    myDAO.createAccount(new Account(0,login.getUser().getApi_token(),login.getUser().getId(),login.getUser().getRole(),login.getUser().getProfile()));
+                    myDAO.createAccount(new Account(0,login.getUser().getApi_token(),login.getUser().getId(),login.getUser().getRole(),login.getUser().getProfile(),login.getUser().getUpdated_at()));
 
                     Intent intent = new Intent(getApplicationContext(),NewJobActivity.class);
                     startActivity(intent);

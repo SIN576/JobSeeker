@@ -49,14 +49,14 @@ public interface ApiService {
                              @Field("birth") String birth,
                              @Field("role") int role);
 
-    @GET("/api/user/{id}")
-    Call<User> getUser(@Path("id") int id, @Header("Authorization") String token);
+    @GET("/api/user/{id}/{updated_at}")
+    Call<User> getUser(@Path("id") int id,@Path("id") String update_at, @Header("Authorization") String token);
 
     @POST("/api/user/updateprofile")
     Call<User> updatedProfile(@Body RequestBody requestBody, @Header("Authorization") String token);
 
     @POST("/api/user/update/{id}")
-    Call<ResponseBody> update(@Body RequestBody requestBody, @Path("id") int id, @Header("Authorization") String token);
+    Call<User> update(@Body RequestBody requestBody, @Path("id") int id, @Header("Authorization") String token);
 
     @DELETE("/api/postjob/delete/{id}")
     Call<Void> deleteJob(@Path("id") int id, @Header("Authorization") String token);

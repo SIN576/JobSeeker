@@ -235,7 +235,7 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
                 MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
                 MyDAO myDAO = myAppDatabase.getMyDao();
                 User user = response.body();
-                Account account = new Account(0,user.getApi_token(),user.getId(),user.getRole(),user.getProfile());
+                Account account = new Account(0,user.getApi_token(),user.getId(),user.getRole(),user.getProfile(),user.getUpdated_at());
                 myDAO.updateAccount(account);
                 Log.e("success profile", response.message());
                 Toast.makeText(getApplicationContext(), "Success full !", Toast.LENGTH_SHORT).show();
@@ -281,7 +281,7 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
 
-        Call<User> call = apiService.getUser((int) account.getAccountId(), "Bearer " + account.getToken());
+        Call<User> call = apiService.getUser((int) account.getAccountId(),account.getUpdatedAt(), "Bearer " + account.getToken());
 
         call.enqueue(new Callback<User>() {
             @Override
@@ -294,9 +294,11 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
                 if (response.body() != null) {
                     Log.e("success", response.message());
 
+                    binding.accountInfoCompanyName.setText(user.getCompany_name());
                     binding.accountInfoEmail.setText(user.getEmail());
                     binding.accountInfoAddress.setText(user.getAddress());
                     binding.tvNameProfile.setText(user.getFirst_name() + " " + user.getLast_name());
+                    binding.accountInfoPhoneNumber.setText(user.getPhone_number());
                     if (user.getProfile() != null) {
                         Picasso.get()
                                 .load(Connection.BASEURL+"/api/user/getDownloadProfile/"+user.getId()+"/"+user.getProfile())

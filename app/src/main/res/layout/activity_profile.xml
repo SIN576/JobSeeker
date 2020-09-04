@@ -133,7 +133,7 @@
                               <TextView
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:text="Company Name"
+                                  android:text="@string/company_name"
                                   android:textColor="#000"
                                   android:textSize="15sp"
                                   android:textStyle="bold" />
@@ -181,7 +181,7 @@
                               <TextView
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:text="Email"
+                                  android:text="@string/email"
                                   android:textColor="#000"
                                   android:textSize="15sp"
                                   android:textStyle="bold" />
@@ -231,7 +231,7 @@
                               <TextView
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:text="Phone Number"
+                                  android:text="@string/phone_number"
                                   android:textColor="#000"
                                   android:textSize="15sp"
                                   android:textStyle="bold" />
@@ -280,7 +280,7 @@
                               <TextView
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:text="Address"
+                                  android:text="@string/location"
                                   android:textColor="#000"
                                   android:textSize="15sp"
                                   android:textStyle="bold" />
@@ -328,7 +328,7 @@
                               <TextView
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:text="About"
+                                  android:text="@string/about"
                                   android:textColor="#000"
                                   android:textSize="15sp"
                                   android:textStyle="bold" />
@@ -376,7 +376,7 @@
                               <TextView
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:text="See Your About info"
+                                  android:text="@string/edit_account_info"
                                   android:textColor="#000"
                                   android:textSize="15sp"
                                   android:textStyle="bold" />

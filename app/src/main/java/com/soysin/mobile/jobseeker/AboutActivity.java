@@ -63,7 +63,7 @@ public class AboutActivity extends AppCompatActivity {
         Retrofit retrofit = Connection.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
 
-        Call<User> call = apiService.getUser((int) account.getAccountId(), "Bearer " + account.getToken());
+        Call<User> call = apiService.getUser((int) account.getAccountId(),"", "Bearer " + account.getToken());
 
         call.enqueue(new Callback<User>() {
             @Override
@@ -102,8 +102,8 @@ public class AboutActivity extends AppCompatActivity {
         ApiService apiService = retrofit.create(ApiService.class);
 
         final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        requestBodyBuilder.addFormDataPart("first_name",binding.firstName.getText().toString());
-        requestBodyBuilder.addFormDataPart("last_name",binding.lastName.getText().toString());
+        requestBodyBuilder.addFormDataPart("first_name",binding.firstName.getText().toString().trim());
+        requestBodyBuilder.addFormDataPart("last_name",binding.lastName.getText().toString().trim());
         requestBodyBuilder.addFormDataPart("email",binding.accountInfoEmail.getText().toString());
         requestBodyBuilder.addFormDataPart("company_name",binding.accountInfoCompanyName.getText().toString());
         requestBodyBuilder.addFormDataPart("role",user.getRole()+"");
@@ -112,19 +112,23 @@ public class AboutActivity extends AppCompatActivity {
         requestBodyBuilder.addFormDataPart("address",binding.accountInfoAddress.getText().toString());
 
         RequestBody requestBody=requestBodyBuilder.build();
-        Call<ResponseBody> call = apiService.update(requestBody,user.getId(),"Bearer "+account.getToken());
+        Call<User> call = apiService.update(requestBody,user.getId(),"Bearer "+account.getToken());
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (!response.isSuccessful()){
-                    Log.e("Successful","fail");
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()){
+                    MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
+                    MyDAO myDAO = myAppDatabase.getMyDao();
+                    User user = response.body();
+                    Account account = new Account(0,user.getApi_token(),user.getId(),user.getRole(),user.getProfile(),user.getUpdated_at());
+                    myDAO.updateAccount(account);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("Successful",t.getMessage());
             }
         });
     }

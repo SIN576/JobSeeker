@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JobSeeker</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="base_url">http://192.168.43.183:8000</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invalid_username">Please Enter Username</string>
+    <string name="invalid_password">Capital and small letter symbol number</string>
+    <string name="invalid_email">Please Enter email address</string>
+    <string name="conform_password">Password is not match</string>
+    <string name="logo">image_logo</string>
+    <string name="username">អុីមែល</string>
+    <string name="password">លេខកូតសម្ងាត់</string>
+    <string name="Login">ចូល</string>
+    <string name="youDoNotHaveAccount">"បើអ្នកមិនទាន់មានគណនី? "</string>
+    <string name="register">ចុះឈ្មោះ</string>
+    <string name="title_activity_new_job">NewJobActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="first_name">គោតនាម</string>
+    <string name="last_name">នាម</string>
+    <string name="date_of_birth">ថ្ងៃ​ខែ​ឆ្នាំ​កំណើត</string>
+    <string name="company_name">ឈ្មោះក្រុមហ៊ុន</string>
+    <string name="phone_number">លេខទូរស័ព្ទ</string>
+    <string name="email">អុីមែល</string>
+    <string name="conform_password_r">បញ្ជាក់លេខកូតសម្ងាត់</string>
+    <string name="sign_up">បង្កើតគណនី</string>
+    <string name="you_have_account">បើអ្នកមានគណនី?</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="good_morning">Good morning</string>
+    <string name="name">Name</string>
+    <string name="find_job">Find Your</string>
+    <string name="drawerOpen">open</string>
+    <string name="drawerClose">close</string>
+    <string name="profile">គណនីរបស់អ្នក</string>
+    <string name="todo">TODO</string>
+    <string name="content_description_media">description</string>
+    <string name="label">Comapany_name</string>
+    <string name="hint_text">Day</string>
+    <string name="content_description_end_icon">calendar</string>
+    <string name="term">ប្រភេទការងារ</string>
+    <string name="location">ទីកន្លែង</string>
+    <string name="new_jobs">ការងារថ្មីៗ</string>
+    <string name="employer">អ្នករកបុគ្គល</string>
+    <string name="seeker">អ្នករកការងារ</string>
+    <string name="no_data">គ្មានទិន្នន័យ</string>
+    <string name="search_job">ស្វែងរកការងារ....</string>
+    <string name="post_job">បង្ហោះការងារ</string>
+    <string name="post_cv">បង្ហោះពាក្យសុំុការងារ</string>
+    <string name="setting">ការកំណត់</string>
+    <string name="change_language">ប្ដូរភាសា</string>
+    <string name="log_out">ចេញពីគណនី</string>
+    <string name="post">បង្ហោះ</string>
+    <string name="choose_image">ជ្រើសរើសរូបភាព</string>
+    <string name="title">ប្រធានបទការងារ</string>
+    <string name="requirement">តម្រូវការ</string>
+    <string name="last_date">ថ្ងៃផុតកំណត់</string>
+    <string name="change_image">ប្ដូររូបភាព</string>
+    <string name="save">រក្សាទុក</string>
+    <string name="edit">កែប្រែ</string>
+    <string name="about">អំពីអ្នក</string>
+    <string name="edit_account_info">ផ្លាស់ប្ដូទិន្នន័យ</string>
+    <string name="basic_info">ទ័តមានទូទៅ</string>
+    <string name="contact_info">ព័តមានសម្រាប់ទំនាក់ទំនង</string>
+    <string name="place_info">ទីកន្លែង</string>
+    <string name="choose_cv">ជ្រើសរើសពាក្យសុំការងារ</string>
+    <string name="change_cv">ប្ដូរពាក្យសុំការងារ</string>
+    <string name="about_job">អំពីការងារ</string>
+    <string name="company">ក្រុមហ៊ុន</string>
+
+    <string-array name="typeOfJob">
+        <item>ទាំងអស់</item>
+        <item>ការងារពេញម៉ោង</item>
+        <item>ការងារក្រៅម៉ោង</item>
+        <item>កម្មសិក្សា</item>
+    </string-array>
+
+    <string-array name="typeOfJobPost">
+        <item>Full time</item>
+        <item>Part time</item>
+        <item>Internship</item>
+    </string-array>
+    <string-array name="typeOfJobPost1">
+        <item>Part time</item>
+        <item>Full time</item>
+        <item>Internship</item>
+    </string-array>
+    <string-array name="typeOfJobPost2">
+        <item>Internship</item>
+        <item>Full time</item>
+        <item>Part time</item>
+    </string-array>
+</resources>

@@ -244,9 +244,9 @@ public class PostJobActivity extends AppCompatActivity implements AdapterView.On
                 bundle.getString("term"),bundle.getString("title"),
                 bundle.getString("image"),bundle.getInt("id"));
 
-        binding.titleApp.setText("Edit");
-        binding.btnPost.setText("Save");
-        binding.postJobButtonChooseImage.setText("change image");
+        binding.titleApp.setText(getResources().getText(R.string.edit));
+        binding.btnPost.setText(getResources().getText(R.string.save));
+        binding.postJobButtonChooseImage.setText(getResources().getText(R.string.change_image));
 
         term = postJob.getTerm();
         binding.edCompanyName.setText(postJob.getCompany_name());

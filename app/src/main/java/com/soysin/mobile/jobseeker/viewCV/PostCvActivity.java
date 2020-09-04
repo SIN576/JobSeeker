@@ -16,6 +16,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 
 import com.soysin.mobile.jobseeker.ProfileActivity;
+import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.Validate;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostCvBinding;
@@ -131,9 +132,9 @@ public class PostCvActivity extends AppCompatActivity {
         cv = new Cv(bundle.getString("phoneNumber"),bundle.getString("email"),
                 bundle.getString("experience"),bundle.getString("title"),
                 bundle.getString("pdf"),bundle.getInt("id"));
-        binding.titleApp.setText("Edit");
-        binding.btnPostCv.setText("Save");
-        binding.postJobButtonChooseImage.setText("change Cv");
+        binding.titleApp.setText(getResources().getText(R.string.edit));
+        binding.btnPostCv.setText(getResources().getText(R.string.save));
+        binding.postJobButtonChooseImage.setText(getResources().getText(R.string.choose_cv));
 
         binding.edTitle.setText(bundle.getString("title"));
         binding.edExperience.setText(bundle.getString("experience"));

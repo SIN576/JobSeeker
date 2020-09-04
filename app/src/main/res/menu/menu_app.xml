@@ -5,7 +5,7 @@
         <item
             android:icon="@drawable/ic_person_outline"
             android:id="@+id/view_cv_id"
-            android:title="Profile" />
+            android:title="@string/profile" />
         <item
             android:visible="false"
             android:icon="@drawable/type_of_cv"
@@ -20,11 +20,11 @@
             android:visible="false"
             android:icon="@drawable/ic_upload_24"
             android:id="@+id/upload_job_id"
-            android:title="post job" />
+            android:title="@string/post_job" />
         <item
             android:icon="@drawable/ic_upload_24"
             android:id="@+id/upload_job_Cv_id"
-            android:title="post CV" />
+            android:title="@string/post_cv" />
     </group>
 
     <item android:title="communicate">
@@ -39,16 +39,16 @@
                 android:title="send" />
         </menu>
     </item>
-    <item android:title="setting">
+    <item android:title="@string/setting">
         <menu>
             <item
                 android:icon="@drawable/ic_baseline_language_24"
                 android:id="@+id/language"
-                android:title="change language" />
+                android:title="@string/change_language" />
             <item
                 android:icon="@drawable/logout"
                 android:id="@+id/log_out_id"
-                android:title="Log out" />
+                android:title="@string/log_out" />
         </menu>
     </item>
 

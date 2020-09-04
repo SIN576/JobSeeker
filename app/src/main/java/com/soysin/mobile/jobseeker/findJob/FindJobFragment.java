@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -133,7 +134,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
 //            }
 //        });
 
-        getTitle();
+        //getTitle();
 
         binding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +169,13 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
         });
         return root;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getTitle();
+    }
+
     private void getTitle(){
         ApiService  apiService= Connection.getClient().create(ApiService.class);
         Call<List<FilterData>> listCall = apiService.getTitle();
@@ -183,7 +191,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
                         titles.add(filterData.get(i).getTitle());
                     }
 
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(),
                             android.R.layout.simple_list_item_1,titles);
                     binding.searchJob.setAdapter(arrayAdapter);
                 }
@@ -238,6 +246,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
                     
                     binding.tvNoData.setVisibility(View.VISIBLE);
                     binding.recyclerViewFindJobVertical.setVisibility(View.GONE);
+                    binding.progressBar.setVisibility(View.GONE);
                 }
                 limit = response.body().getLast_page();
                 if (response.isSuccessful() && response.body() != null && page <= limit) {
@@ -288,10 +297,31 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
         intent.putExtra("type", "job");
         startActivity(intent);
     }
-
+private String getText1(int i){
+        String text;
+       switch (i){
+           case 0:
+               text = "All";
+               break;
+           case 1:
+               text = "Full time";
+               break;
+           case 2:
+               text = "Past time";
+               break;
+           case 3:
+               text = "Internship";
+               break;
+           default:
+               text = "Other";
+               break;
+       }
+       return text;
+}
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-         text = parent.getItemAtPosition(position).toString();
+        Log.e("position",position+"");
+         text = getText1(position);
         if (text.equals("All")){
             text = null;
             page = 1;
