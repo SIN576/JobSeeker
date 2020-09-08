@@ -24,6 +24,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
 
     int id;
     String token;
+    int role;
     ActivityJobDescriptionBinding binding;
     private PostJob postJob;
     @Override
@@ -33,6 +34,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         id = getIntent().getIntExtra("id",1);
+        role = getIntent().getIntExtra("role",1);
 
         token = getIntent().getStringExtra("token");
         setSupportActionBar(binding.toolbar);
@@ -52,6 +54,9 @@ public class JobDescriptionActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        if (role == 2){
+            binding.Apply.setVisibility(View.GONE);
+        }
     }
     private void getJob(){
         Retrofit retrofit = Connection.getClient();

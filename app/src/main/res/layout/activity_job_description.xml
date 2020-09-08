@@ -230,6 +230,8 @@
 </LinearLayout>
 
 <RelativeLayout
+    android:visibility="visible"
+    android:id="@+id/Apply"
     android:padding="20dp"
     android:layout_alignParentBottom="true"
     android:layout_width="match_parent"

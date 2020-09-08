@@ -287,6 +287,7 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
         Intent intent = new Intent(getActivity(), JobDescriptionActivity.class);
         intent.putExtra("id", postJob.getId());
         intent.putExtra("token", account.getToken());
+        intent.putExtra("role",account.getAccountRole());
         startActivity(intent);
     }
 

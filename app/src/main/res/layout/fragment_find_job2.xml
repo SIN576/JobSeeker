@@ -7,107 +7,118 @@
     tools:context=".findJob.FindJobFragment">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        tools:ignore="UselessParent">
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <AutoCompleteTextView
-            android:id="@+id/search_job"
-            android:padding="10dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/border"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:hint="@string/search_job"
-            android:layout_height="40dp"/>
-
-        <ImageView
-            android:id="@+id/btn_search"
-            android:padding="8dp"
-            android:src="@drawable/ic_search"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/border"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-
-    </LinearLayout>
         <LinearLayout
-            android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <AutoCompleteTextView
+                android:id="@+id/search_job"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:hint="@string/search_job"
+                android:padding="10dp"
+                android:layout_marginEnd="5dp" />
+
+            <ImageView
+                android:id="@+id/btn_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/border"
+                android:padding="8dp"
+                android:src="@drawable/ic_search"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
             <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp">
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:background="#fff">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnLocation"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:background="#fff"
                 android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="30dp">
+                android:layout_marginStart="8dp">
+
                 <TextView
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:text="@string/location"
-                    android:background="#FFF"
                     android:id="@+id/filter_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#FFF"
+                    android:text="@string/location"
+                    android:textColor="#000" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:visibility="visible"
-                android:id="@+id/recycler_view_find_job_vertical"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_find_job_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="visible"
+                    tools:ignore="UnusedAttribute">
 
-            <TextView
-                android:id="@+id/tvNoData"
-                android:visibility="gone"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                android:text="@string/no_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            
-            <ProgressBar
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar"/>
+                </androidx.recyclerview.widget.RecyclerView>
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/tvNoData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/no_data"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
 
-</LinearLayout>
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
 </FrameLayout>
