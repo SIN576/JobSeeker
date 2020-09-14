@@ -18,14 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.soysin.mobile.jobseeker.R;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.findJob.PostJobActivity;
-import com.soysin.mobile.jobseeker.model.Cv;
 import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.util.DateUtils;
 import com.soysin.mobile.jobseeker.viewCV.DeleteCV;
-import com.soysin.mobile.jobseeker.viewCV.PostCvActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobHolder> {
@@ -43,11 +39,9 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
 
     FindJobAdapter.OnClickItemListener mListener;
 
-    List<String> logo;
-
 
     public interface OnClickItemListener {
-        public void onItemClick(PostJob postJob);
+         void onItemClick(PostJob postJob);
 
     }
 
@@ -81,6 +75,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
         Picasso.get()
                 .load(Connection.BASEURL+"/api/postjob/getdownload/"+findJobModels.get(position).getId()+"/"+findJobModels.get(position).getImage())
                 .into(holder.imgPostJob);
+        holder.tv_location.setText(findJobModels.get(position).getAddress());
         holder.tv_company_name.setText(findJobModels.get(position).getCompany_name());
         holder.tv_term.setText(findJobModels.get(position).getTerm());
         holder.tv_date_ago.setText(DateUtils.covertTimeToText(findJobModels.get(position).getUpdated_at())+"");
@@ -92,7 +87,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
     }
 
     public class FindJobHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
-        TextView tv_email, tv_job_title, tv_company_name, tv_term, tv_date_ago;
+        TextView tv_email, tv_job_title, tv_company_name, tv_term, tv_date_ago,tv_location;
         ImageView imageView,imgPostJob,btn_more_option;
 
 
@@ -100,6 +95,7 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
             super(itemView);
             this.btn_more_option = itemView.findViewById(R.id.btnMore);
             imgPostJob = itemView.findViewById(R.id.img_post_job);
+            tv_location = itemView.findViewById(R.id.location_job);
             tv_date_ago = itemView.findViewById(R.id.date_ago);
             tv_term = itemView.findViewById(R.id.term);
             tv_email = itemView.findViewById(R.id.tv_email);
@@ -143,7 +139,6 @@ public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.FindJobH
                     bundle.putString("image",findJobModels.get(getLayoutPosition()).getImage());
                     bundle.putInt("id",findJobModels.get(getAdapterPosition()).getId());
                     bundle.putString("company_name",findJobModels.get(getAdapterPosition()).getCompany_name());
-                    Log.e("company_name",findJobModels.get(getAdapterPosition()).getCompany_name());
                     bundle.putString("term",findJobModels.get(getAdapterPosition()).getTerm());
                     bundle.putString("title",findJobModels.get(getAdapterPosition()).getTitle());
                     bundle.putString("requirement",findJobModels.get(getAdapterPosition()).getRequirement());

@@ -1,20 +1,16 @@
 package com.soysin.mobile.jobseeker;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatRadioButton;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
@@ -23,10 +19,6 @@ import com.soysin.mobile.jobseeker.model.Account;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
-    AppCompatRadioButton btn_employee, btn_admin, btn_seeker;
-    Button btn_login, btn_register;
-    private static int SPLASH_SCREEN = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Account account = myDAO.getAccount(0);
 
+        int SPLASH_SCREEN = 1000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

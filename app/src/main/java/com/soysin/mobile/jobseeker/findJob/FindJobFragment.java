@@ -12,27 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.soysin.mobile.jobseeker.R;
-import com.soysin.mobile.jobseeker.TypeOfJobDetailActivity;
 import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
-import com.soysin.mobile.jobseeker.adapter.TypeOfJobAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.FragmentFindJob2Binding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
@@ -42,32 +31,27 @@ import com.soysin.mobile.jobseeker.model.Data;
 import com.soysin.mobile.jobseeker.model.FilterData;
 import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.model.PostJobPagination;
-import com.soysin.mobile.jobseeker.model.TypeOfJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
-import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
-public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickItemListener, TypeOfJobAdapter.OnClickItemListener, AdapterView.OnItemSelectedListener {
+public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickItemListener, AdapterView.OnItemSelectedListener {
 
 
     FindJobAdapter adapter;
-    List<PostJob> postJobs,postJobs1,postJobs2;
+    List<PostJob> postJobs;
     RecyclerView recyclerView_vertical;
     View root;
     Account account;
-    private String token,text=null,province = null,title=null;
+    String token;
+    private String text=null,province = null,title=null;
     private int page = 1, limit, itemChecked= 0, number;
 
 
@@ -288,14 +272,6 @@ public class FindJobFragment extends Fragment implements FindJobAdapter.OnClickI
         intent.putExtra("id", postJob.getId());
         intent.putExtra("token", account.getToken());
         intent.putExtra("role",account.getAccountRole());
-        startActivity(intent);
-    }
-
-    @Override
-    public void onClickJobType(TypeOfJob typeOfJob) {
-        Intent intent = new Intent(getActivity(), TypeOfJobDetailActivity.class);
-        intent.putExtra("title", typeOfJob.getJob_status());
-        intent.putExtra("type", "job");
         startActivity(intent);
     }
 private String getText1(int i){

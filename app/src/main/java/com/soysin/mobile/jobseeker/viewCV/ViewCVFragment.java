@@ -3,9 +3,9 @@ package com.soysin.mobile.jobseeker.viewCV;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,29 +16,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.soysin.mobile.jobseeker.ProfileActivity;
 import com.soysin.mobile.jobseeker.R;
-import com.soysin.mobile.jobseeker.TypeOfCvActivity;
-import com.soysin.mobile.jobseeker.TypeOfJobDetailActivity;
-import com.soysin.mobile.jobseeker.ViewCVDetailActivity;
-import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
-import com.soysin.mobile.jobseeker.adapter.TypeOfJobAdapter;
 import com.soysin.mobile.jobseeker.adapter.ViewCVAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.FragmentViewCV2Binding;
-import com.soysin.mobile.jobseeker.findJob.FindJobFragment;
+import com.soysin.mobile.jobseeker.db.MyAppDatabase;
+import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Cv;
 import com.soysin.mobile.jobseeker.model.FilterData;
-import com.soysin.mobile.jobseeker.model.FindJobModel;
 import com.soysin.mobile.jobseeker.model.PostCvPagination;
-import com.soysin.mobile.jobseeker.model.TypeOfJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.logging.LoggingEventListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +40,7 @@ import retrofit2.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickItemListener, TypeOfJobAdapter.OnClickItemListener {
+public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickItemListener {
 
     private RecyclerView recyclerView1;
     private View root;
@@ -60,11 +52,24 @@ public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickIte
     private String title = null;
 
 
-    public ViewCVFragment(Account account) {
-        this.account = account;
+    public ViewCVFragment() {
         // Required empty public constructor
     }
 
+    public static ViewCVFragment getInstance(){
+        ViewCVFragment viewCVFragment = new ViewCVFragment();
+        return viewCVFragment;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(requireContext());
+        MyDAO myDAO = myAppDatabase.getMyDao();
+        account = myDAO.getAccount(0);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -179,16 +184,9 @@ public class ViewCVFragment extends Fragment implements ViewCVAdapter.OnClickIte
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(Cv cv) {
         Intent intent = new Intent(getActivity(), ViewCVDetailActivity.class);
-        intent.putExtra("id",cvList.get(position).getId());
-        startActivity(intent);
-    }
-
-    @Override
-    public void onClickJobType(TypeOfJob typeOfJob) {
-        Intent intent = new Intent(getActivity(), TypeOfCvActivity.class);
-        intent.putExtra("title",typeOfJob.getJob_status());
+        intent.putExtra("id",cv.getId());
         startActivity(intent);
     }
 }

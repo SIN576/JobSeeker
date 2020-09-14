@@ -1,4 +1,4 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.profile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuInflater;
@@ -24,6 +22,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.soysin.mobile.jobseeker.R;
+import com.soysin.mobile.jobseeker.viewCV.ViewCVDetailActivity;
 import com.soysin.mobile.jobseeker.adapter.FindJobAdapter;
 import com.soysin.mobile.jobseeker.adapter.ViewCVAdapter;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
@@ -31,7 +31,6 @@ import com.soysin.mobile.jobseeker.databinding.ActivityProfileBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.findJob.JobDescriptionActivity;
-import com.soysin.mobile.jobseeker.findJob.PostJobActivity;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Cv;
 import com.soysin.mobile.jobseeker.model.PostJob;
@@ -43,20 +42,17 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ProfileActivity extends AppCompatActivity implements FindJobAdapter.OnClickItemListener {
+public class ProfileActivity extends AppCompatActivity implements ViewCVAdapter.OnClickItemListener,FindJobAdapter.OnClickItemListener {
 
     ActivityProfileBinding binding;
     Account account;
@@ -66,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
     private int REQUEST_IMAGE_CAPTURE = 999;
     File file;
     private String currentImage;
+    List<Cv> cvList;
 
     @Override
     protected void onResume() {
@@ -329,12 +326,13 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
                     Log.e("not success", response.message());
                     return;
                 }
-                List<Cv> cvList = response.body();
+                cvList = response.body();
 
                 if (cvList != null) {
                     binding.recyclerViewProfile.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
                     viewCVAdapter = new ViewCVAdapter(getApplicationContext(), cvList,account.getToken());
                     binding.recyclerViewProfile.setAdapter(viewCVAdapter);
+                    viewCVAdapter.setOnClickItemListener(ProfileActivity.this);
                 }
             }
 
@@ -350,6 +348,13 @@ public class ProfileActivity extends AppCompatActivity implements FindJobAdapter
         Intent intent = new Intent(getApplicationContext(), JobDescriptionActivity.class);
         intent.putExtra("id",postJob.getId());
         intent.putExtra("token", account.getToken());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(Cv cv) {
+        Intent intent = new Intent(getApplicationContext(), ViewCVDetailActivity.class);
+        intent.putExtra("id",cv.getId());
         startActivity(intent);
     }
 }

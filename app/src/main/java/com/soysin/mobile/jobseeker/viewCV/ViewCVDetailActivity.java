@@ -1,4 +1,4 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.viewCV;
 
 import androidx.appcompat.app.AppCompatActivity;
 

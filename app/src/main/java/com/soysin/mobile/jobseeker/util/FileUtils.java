@@ -108,7 +108,7 @@ public class FileUtils {
         return count;
     }
 
-    public static String createImageFile(Context context){
+    public static String createImageFile(Context context) {
         try {
             // Create an image file name
             String imageFileName = "JPEG_" + UUID.randomUUID().toString() + "_";
@@ -119,7 +119,7 @@ public class FileUtils {
                     storageDir      /* directory */
             );
             return image.getAbsolutePath();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return null;
         }
     }

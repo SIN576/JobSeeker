@@ -1,4 +1,4 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,17 +8,14 @@ import android.view.View;
 
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityAboutBinding;
-import com.soysin.mobile.jobseeker.databinding.ActivityAppBarBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.User;
 import com.soysin.mobile.jobseeker.service.ApiService;
-import com.squareup.picasso.Picasso;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

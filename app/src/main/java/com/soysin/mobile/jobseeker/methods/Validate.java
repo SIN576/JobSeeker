@@ -1,4 +1,4 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.methods;
 
 import android.app.Activity;
 import android.content.Context;

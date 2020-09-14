@@ -16,15 +16,12 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.soysin.mobile.jobseeker.NewJobActivity;
-import com.soysin.mobile.jobseeker.Project;
+import com.soysin.mobile.jobseeker.methods.Project;
 import com.soysin.mobile.jobseeker.R;
-import com.soysin.mobile.jobseeker.Validate;
+import com.soysin.mobile.jobseeker.methods.Validate;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostJobBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
@@ -34,12 +31,10 @@ import com.soysin.mobile.jobseeker.model.Data;
 import com.soysin.mobile.jobseeker.model.PostJob;
 import com.soysin.mobile.jobseeker.service.ApiService;
 import com.soysin.mobile.jobseeker.util.FileUtils;
-import com.soysin.mobile.jobseeker.GetRequestBody;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

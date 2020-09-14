@@ -23,21 +23,20 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Soy Sin"
             android:textColor="#000"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/tv_email_header"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="soysin22@gmail.com"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:textSize="18sp"
-            />
+            android:text="soysin22@gmail.com"
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

@@ -9,75 +9,75 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:contentDescription="@string/logo"
-        android:layout_marginBottom="40dp"
-        android:src="@drawable/logojob"
         android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        android:layout_height="150dp"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logojob" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_gravity="center"
-        app:errorEnabled="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/ed_username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
 
-            android:inputType="textEmailAddress"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
             android:drawablePadding="10dp"
             android:hint="@string/username"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:layout_width="300dp"
-            android:layout_height="50dp"/>
+            android:inputType="textEmailAddress"
+            android:padding="5dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:passwordToggleEnabled="true"
         android:id="@+id/ed_password"
-        app:errorEnabled="true"
-        android:layout_gravity="center"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textPassword"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
             android:drawablePadding="10dp"
             android:hint="@string/password"
-            android:layout_gravity="center"
-            android:padding="5dp"
-            android:layout_width="300dp"
-            android:layout_height="50dp"/>
+            android:inputType="textPassword"
+            android:padding="5dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
     <Button
         android:id="@+id/btn_login_login"
-        android:layout_marginTop="25dp"
-        android:text="@string/Login"
-        android:textColor="#fff"
-        android:layout_gravity="center"
-        android:layout_width ="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
         android:background="@drawable/login_button"
-        android:textAllCaps="false"/>
+        android:text="@string/Login"
+        android:textAllCaps="false"
+        android:textColor="#fff" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
         <TextView
-            android:text="@string/youDoNotHaveAccount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/youDoNotHaveAccount" />
 
         <TextView
             android:id="@+id/login_register"
@@ -87,5 +87,30 @@
             android:textColor="#ff0000" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_language" />
+
+        <TextView
+            android:id="@+id/btn_language"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:onClick="changeLanguage"
+            android:text="@string/language"
+            android:textColor="#0000ff"
+            tools:ignore="OnClick" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

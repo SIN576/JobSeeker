@@ -21,6 +21,7 @@ import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityLoginBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
+import com.soysin.mobile.jobseeker.methods.Validate;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Login;
 import com.soysin.mobile.jobseeker.service.ApiService;
@@ -52,10 +53,10 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        i = getIntent().getIntExtra("i",1);
-        if (i == 1){
-            getDialog();
-        }
+//        i = getIntent().getIntExtra("i", 1);
+//        if (i == 1) {
+//            getDialog();
+//        }
 
         btn_login = findViewById(R.id.btn_login_login);
         ed_password = findViewById(R.id.ed_password);
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (login != null && login.getSuccess() == 1) {
                     MyAppDatabase myAppDatabase = MyAppDatabase.getInstance(getApplicationContext());
                     MyDAO myDAO = myAppDatabase.getMyDao();
-                    myDAO.createAccount(new Account(0, login.getUser().getApi_token(), login.getUser().getId(), login.getUser().getRole(), login.getUser().getProfile(),login.getUser().getUpdated_at()));
+                    myDAO.createAccount(new Account(0, login.getUser().getApi_token(), login.getUser().getId(), login.getUser().getRole(), login.getUser().getProfile(), login.getUser().getUpdated_at()));
                     Intent intent = new Intent(getApplicationContext(), NewJobActivity.class);
                     startActivity(intent);
                     finish();
@@ -116,17 +117,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void getDialog(){
-        final String[] language= {"English","ខ្មែរ"};
+
+    private void getDialog() {
+        final String[] language = {"English", "ខ្មែរ"};
         final int itemChecked = 0;
         new MaterialAlertDialogBuilder(LoginActivity.this)
                 .setTitle("Dialog")
                 .setSingleChoiceItems(language, itemChecked, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which){
-                        if (which == 0){
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
                             setLocale("en");
-                        }else {
+                        } else {
                             setLocale("km");
                         }
                         dialog.dismiss();
@@ -134,8 +136,9 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
     public void setLocale(String lang) {
-        Log.e("lang",lang);
+        Log.e("lang", lang);
         Locale myLocale = new Locale(lang);
 
         Resources res = getResources();
@@ -144,10 +147,20 @@ public class LoginActivity extends AppCompatActivity {
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
         SharedPreferences prefe = getSharedPreferences("settings", Activity.MODE_PRIVATE);
-        prefe.edit().putString("MyLang",lang).apply();
-        Intent refresh = new Intent(this, LoginActivity.class);
-        finish();
-        refresh.putExtra("i",2);
-        startActivity(refresh);
+        prefe.edit().putString("MyLang", lang).apply();
+//        Intent refresh = new Intent(this, LoginActivity.class);
+//        finish();
+//        refresh.putExtra("i", 2);
+//        startActivity(refresh);
+        recreate();
+    }
+
+    public void changeLanguage(View view) {
+        String text = binding.btnLanguage.getText().toString().trim();
+        if (text.equals("English")) {
+            setLocale("en");
+        } else {
+            setLocale("km");
+        }
     }
 }

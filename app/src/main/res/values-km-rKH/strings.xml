@@ -12,6 +12,8 @@
     <string name="logo">image_logo</string>
     <string name="username">អុីមែល</string>
     <string name="password">លេខកូតសម្ងាត់</string>
+    <string name="language">English</string>
+    <string name="ViewCv">View Cv</string>
     <string name="Login">ចូល</string>
     <string name="youDoNotHaveAccount">"បើអ្នកមិនទាន់មានគណនី? "</string>
     <string name="register">ចុះឈ្មោះ</string>

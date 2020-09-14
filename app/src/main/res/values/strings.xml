@@ -12,6 +12,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="Login">Login</string>
+    <string name="ViewCv">View Cv</string>
     <string name="youDoNotHaveAccount">"you don't have account? "</string>
     <string name="register">register</string>
     <string name="title_activity_new_job">NewJobActivity</string>
@@ -76,6 +77,7 @@
     <string name="company">Company</string>
     <string name="channel_name">JOB</string>
     <string name="channel_description">JOBSeeker</string>
+    <string name="language">ខ្មែរ</string>
     <string-array name="typeOfJob">
         <item>All</item>
         <item>Full time</item>

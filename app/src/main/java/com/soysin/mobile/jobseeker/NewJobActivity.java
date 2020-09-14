@@ -4,17 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +32,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
-import com.google.common.base.MoreObjects;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
@@ -47,6 +42,7 @@ import com.soysin.mobile.jobseeker.findJob.FindJobFragment;
 import com.soysin.mobile.jobseeker.findJob.PostJobActivity;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.User;
+import com.soysin.mobile.jobseeker.profile.ProfileActivity;
 import com.soysin.mobile.jobseeker.service.ApiService;
 import com.soysin.mobile.jobseeker.viewCV.PostCvActivity;
 import com.soysin.mobile.jobseeker.viewCV.ViewCVFragment;
@@ -73,6 +69,8 @@ public class NewJobActivity extends AppCompatActivity implements NavigationView.
     private TextView tvUsername, email;
     private ImageView imgPro;
     ImageView img_pro;
+    private FindJobFragment findJobFragment;
+    private ViewCVFragment viewCVFragment;
 
     @Override
     protected void onResume() {
@@ -136,7 +134,8 @@ public class NewJobActivity extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, FindJobFragment.newInstance(account.getToken())).commit();
+        findJobFragment = FindJobFragment.newInstance(account.getToken());
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, findJobFragment).commit();
 
         binding.navigationBar.setOnNavigationItemSelectedListener(navigation);
 
@@ -145,23 +144,23 @@ public class NewJobActivity extends AppCompatActivity implements NavigationView.
 
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
 
                 // Create an explicit intent for an Activity in your app
 
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
-                        .setContentTitle("My notification")
-                        .setContentText("Much longer text that cannot fit one line...")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Much longer text that cannot fit one line..."))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-
-// notificationId is a unique int for each notification that you must define
-                notificationManager.notify(0, builder.build());
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+//                        .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
+//                        .setContentTitle("My notification")
+//                        .setContentText("Much longer text that cannot fit one line...")
+//                        .setStyle(new NotificationCompat.BigTextStyle()
+//                                .bigText("Much longer text that cannot fit one line..."))
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+//
+//// notificationId is a unique int for each notification that you must define
+//                notificationManager.notify(0, builder.build());
             }
         });
 
@@ -242,11 +241,18 @@ public class NewJobActivity extends AppCompatActivity implements NavigationView.
                     switch (item.getItemId()) {
                         case R.id.item_home:
                             textView.setText(getResources().getText(R.string.new_jobs));
-                            fragment = FindJobFragment.newInstance(account.getToken());
+                            Log.d("create", "new-ffm");
+                            if (findJobFragment == null) {
+                                findJobFragment = FindJobFragment.newInstance(account.getToken());
+                            }
+                            fragment = findJobFragment;
                             break;
                         case R.id.item_view_cv:
                             textView.setText("View Cv");
-                            fragment = new ViewCVFragment(account);
+                            if (viewCVFragment == null) {
+                                viewCVFragment = ViewCVFragment.getInstance();
+                            }
+                            fragment = viewCVFragment;
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.layout_frame, fragment).commit();

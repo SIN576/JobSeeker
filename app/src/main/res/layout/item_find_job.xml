@@ -1,131 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:padding="10dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/title_job"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile Developer"
-                    android:textColor="#000"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_below="@+id/title_job"
-                    android:id="@+id/salary"
-                    android:textSize="12sp"
-                    android:text="$200-$500/month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/term"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/title_job"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/salary"
-                    android:text="full-time"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:id="@+id/btnMore"
-                    android:visibility="gone"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_baseline_more_horiz_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
-            <ImageView
-                android:id="@+id/img_post_job"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="194dp"
-                app:srcCompat="@drawable/accounter"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/content_description_media"
-                />
-
-            <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_img"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="10dp"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp">
-                    <ImageView
-                        android:id="@+id/img_pro"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_launcher_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-
-                </androidx.cardview.widget.CardView>
-                <LinearLayout
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/card_img"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/name_company"
+                        android:id="@+id/title_job"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile Developer"
                         android:textColor="#000"
                         android:textSize="15sp"
-                        android:text="Trendsec Solution"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textStyle="bold" />
+
                     <TextView
-                        android:id="@+id/tv_email"
-                        android:textSize="12sp"
-                        android:text="Sangkat Teuk Laork II"
+                        android:id="@+id/location_job"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title_job"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/term"
+                        android:text="Phnom Penh"
+                        android:textSize="12sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/term" />
 
-                </LinearLayout>
-                <TextView
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/date_ago"
-                    android:textSize="12sp"
-                    android:text="2 day ago"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/term"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title_job"
+                        android:text="full-time"
+                        android:textSize="12sp" />
 
-            </RelativeLayout>
-        </LinearLayout>
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/btnMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_baseline_more_horiz_24"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_post_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="194dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/content_description_media"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/accounter" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_img"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:id="@+id/img_pro"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_launcher_background" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/card_img"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/name_company"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Trendsec Solution"
+                            android:textColor="#000"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sangkat Teuk Laork II"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/date_ago"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="2 day ago"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

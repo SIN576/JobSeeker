@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.MutableContextWrapper;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,17 +14,14 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 
-import com.soysin.mobile.jobseeker.ProfileActivity;
 import com.soysin.mobile.jobseeker.R;
-import com.soysin.mobile.jobseeker.Validate;
+import com.soysin.mobile.jobseeker.methods.Validate;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
 import com.soysin.mobile.jobseeker.databinding.ActivityPostCvBinding;
 import com.soysin.mobile.jobseeker.db.MyAppDatabase;
 import com.soysin.mobile.jobseeker.db.MyDAO;
-import com.soysin.mobile.jobseeker.findJob.PostJobActivity;
 import com.soysin.mobile.jobseeker.model.Account;
 import com.soysin.mobile.jobseeker.model.Cv;
-import com.soysin.mobile.jobseeker.model.User;
 import com.soysin.mobile.jobseeker.service.ApiService;
 import com.soysin.mobile.jobseeker.util.FileUtils;
 import com.squareup.picasso.Picasso;

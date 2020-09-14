@@ -1,15 +1,14 @@
-package com.soysin.mobile.jobseeker;
+package com.soysin.mobile.jobseeker.methods;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.soysin.mobile.jobseeker.R;
 
 import java.util.Calendar;
 

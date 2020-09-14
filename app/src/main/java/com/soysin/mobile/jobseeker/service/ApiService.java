@@ -1,8 +1,6 @@
 package com.soysin.mobile.jobseeker.service;
 
 
-import androidx.room.Delete;
-
 import com.soysin.mobile.jobseeker.model.Cv;
 import com.soysin.mobile.jobseeker.model.FilterData;
 import com.soysin.mobile.jobseeker.model.Login;
@@ -30,6 +28,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+
 
 public interface ApiService {
 

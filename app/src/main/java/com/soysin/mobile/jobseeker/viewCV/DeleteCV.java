@@ -1,9 +1,6 @@
 package com.soysin.mobile.jobseeker.viewCV;
 
-import com.soysin.mobile.jobseeker.ProfileActivity;
 import com.soysin.mobile.jobseeker.apiconnection.Connection;
-import com.soysin.mobile.jobseeker.db.MyAppDatabase;
-import com.soysin.mobile.jobseeker.db.MyDAO;
 import com.soysin.mobile.jobseeker.service.ApiService;
 
 import retrofit2.Call;

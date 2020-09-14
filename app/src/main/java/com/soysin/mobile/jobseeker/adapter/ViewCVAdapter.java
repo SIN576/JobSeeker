@@ -41,7 +41,7 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
     }
 
     public interface OnClickItemListener {
-        public void onItemClick(int position);
+        public void onItemClick(Cv cv);
 
     }
 
@@ -50,7 +50,7 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
     }
 
     public interface OnLongClickItemListener {
-        public void onItemLongClick(int position);
+         void onItemLongClick(int position);
 
     }
 
@@ -114,7 +114,7 @@ public class ViewCVAdapter extends RecyclerView.Adapter<ViewCVAdapter.ViewCVHold
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
+                            mListener.onItemClick(findJobModels.get(position));
                         }
                     }
                 }
